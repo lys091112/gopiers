@@ -1,33 +1,33 @@
-package main
+package basic
 
 import "fmt"
 import "strings"
 import "io"
-import(
-	"math/rand"
-	"flag"
+import (
 	"bufio"
+	"flag"
+	"math/rand"
 	"os"
 	"time"
 )
 
 type Prefix []string
 
-func (p Prefix) String() string{
-	return strings.Join(p,"")
+func (p Prefix) String() string {
+	return strings.Join(p, "")
 }
 
-func (p Prefix) Shift(word string){
+func (p Prefix) Shift(word string) {
 	copy(p, p[1:])
 	p[len(p)-1] = word
 }
 
 type Chain struct {
-	chain map[string][]string
+	chain     map[string][]string
 	prefixLen int
 }
 
-func NewChain(prefixLen int) *Chain{
+func NewChain(prefixLen int) *Chain {
 	return &Chain{make(map[string][]string), prefixLen}
 }
 
@@ -45,7 +45,6 @@ func (c *Chain) Build(r io.Reader) {
 	}
 }
 
-
 // Generate returns a string of at most n words generated from Chain.
 func (c *Chain) Generate(n int) string {
 	p := make(Prefix, c.prefixLen)
@@ -62,15 +61,15 @@ func (c *Chain) Generate(n int) string {
 	return strings.Join(words, " ")
 }
 
+/*
 func main() {
 	// Register command-line flags.
 	numWords := flag.Int("words", 100, "maximum number of words to print")
 	prefixLen := flag.Int("prefix", 2, "prefix length in words")
 	flag.Parse()                     // Parse command-line flags.
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator.
-	c := NewChain(*prefixLen)     // Initialize a new Chain.
-	c.Build(os.Stdin)             // Build chains from standard input.
-	text := c.Generate(*numWords) // Generate text.
-	fmt.Println(text)             // Write text to standard output.
-}
-
+	c := NewChain(*prefixLen)        // Initialize a new Chain.
+	c.Build(os.Stdin)                // Build chains from standard input.
+	text := c.Generate(*numWords)    // Generate text.
+	fmt.Println(text)                // Write text to standard output.
+}*/
