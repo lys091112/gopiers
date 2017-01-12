@@ -1,4 +1,4 @@
-package main
+package leetcode
 
 import "fmt"
 
@@ -66,6 +66,7 @@ func PrintUnion() {
 	}
 }
 
+/*
 func main() {
 	fmt.Println("vim-go")
 	Init_set()
@@ -75,4 +76,4 @@ func main() {
 	Union(4, 5)
 	Union(3, 7)
 	PrintUnion()
-}
+}*/
