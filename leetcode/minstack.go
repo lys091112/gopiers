@@ -1,8 +1,6 @@
 package leetcode
 
-import (
-	"github.com/lys091112/gopiers/container"
-)
+import "github.com/lys091112/gopiers/container"
 
 type MinStack struct {
 
@@ -26,10 +24,10 @@ func NewMinStack() *MinStack {
 
 func (minstack *MinStack) Push(value int) {
 	minstack.data.Push(value)
-	if minstack.minst.Peek() == nil || minstack.minst.Peek() >= value {
+	if minstack.minst.Peek() == nil || minstack.minst.Peek().(int) >= value {
 		minstack.minst.Push(value)
 	}
-	if minstack.maxst.Peek() == nil || minstack.maxst.Peek() <= value {
+	if minstack.maxst.Peek() == nil || minstack.maxst.Peek().(int) <= value {
 		minstack.maxst.Push(value)
 	}
 }
@@ -39,10 +37,10 @@ func (minstack *MinStack) Pop() interface{} {
 	if pop == nil {
 		return nil
 	}
-	if pop == minstack.minst.Peek() {
+	if pop.(int) == minstack.minst.Peek().(int) {
 		return minstack.minst.Pop()
 	}
-	if pop == minstack.maxst.Peek() {
+	if pop.(int) == minstack.maxst.Peek().(int) {
 		return minstack.maxst.Pop()
 	}
 	return nil
@@ -54,3 +52,25 @@ func (minstack *MinStack) Max() interface{} {
 func (minstack *MinStack) Min() interface{} {
 	return minstack.minst.Peek()
 }
+
+/*
+func main() {
+	minstack := NewMinStack()
+	minstack.Push(3)
+	minstack.Push(4)
+	minstack.Push(2)
+	minstack.Push(4)
+	minstack.Push(1)
+	minstack.Push(6)
+	minstack.Push(8)
+	fmt.Println(minstack.Max())
+	fmt.Println(minstack.Min())
+	minstack.Pop()
+	minstack.Pop()
+	minstack.Pop()
+	minstack.Pop()
+	fmt.Println(minstack.Max())
+	fmt.Println(minstack.Min())
+	t.Log("hello")
+
+} */

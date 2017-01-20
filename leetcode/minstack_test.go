@@ -1,7 +1,9 @@
 package leetcode
 
-import "testing"
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestMax(t *testing.T) {
 	minstack := NewMinStack()
