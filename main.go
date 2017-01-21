@@ -19,4 +19,7 @@ func main() {
 	fmt.Println("the max is %d", max2)
 	max3 := leetcode.MaxSubSum(values[0:5])
 	fmt.Println("the max is %d", max3)
+
+	//minStack := leetcode.NewMinStack()
+	//iminStack.Max()
 }

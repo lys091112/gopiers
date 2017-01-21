@@ -16,11 +16,18 @@ const (
 	MAX int = 10
 )
 
+type UnionFind struct {
+}
+
 var father [MAX]int
 var rank [MAX]int
 
+func NewUnionFind() *UnionFind {
+	return &UnionFind{}
+}
+
 // 设置每个节点都是一个单独的集合
-func Init_set() {
+func (unionFind *UnionFind) Init_set() {
 	for i := 0; i < MAX; i++ {
 		father[i] = i
 		rank[i] = 0
@@ -28,18 +35,18 @@ func Init_set() {
 	fmt.Println("hello, world")
 }
 
-func Find(x int) int {
+func (unionFind *UnionFind) Find(x int) int {
 	if x != father[x] {
-		father[x] = Find(father[x]) //回溯时进行路径压缩
+		father[x] = unionFind.Find(father[x]) //回溯时进行路径压缩
 	}
 	return father[x]
 }
 
 // 将两个集合进行融合,
 //按照秩进行合并,并实时的更新秩
-func Union(x, y int) {
-	x = Find(x)
-	y = Find(y)
+func (unionFind *UnionFind) Union(x, y int) {
+	x = unionFind.Find(x)
+	y = unionFind.Find(y)
 	if x == y {
 		return
 	}
@@ -54,7 +61,7 @@ func Union(x, y int) {
 	}
 }
 
-func PrintUnion() {
+func (unionFind *UnionFind) PrintUnion() {
 	for _, k := range father {
 		fmt.Print(k)
 		fmt.Print(" ")
