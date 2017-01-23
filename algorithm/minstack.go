@@ -1,4 +1,4 @@
-package leetcode
+package algorithm
 
 import "github.com/lys091112/gopiers/container"
 
