@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/lys091112/gopiers/algorithm"
+	"github.com/lys091112/gopiers/basic"
 	"github.com/lys091112/gopiers/basic/fileread"
+	"github.com/lys091112/gopiers/basic/network"
 	"github.com/lys091112/gopiers/container"
 	"os"
 	"strings"
@@ -31,4 +33,8 @@ func main() {
 	filePath := strings.Join([]string{path, "README.md"}, "/")
 	fmt.Println(filePath)
 	fileread.ReadUseBufio(filePath)
+	network.GetUrl("https://baidu.com")
+
+	//	network.StartServer()
+	basic.TestSha()
 }

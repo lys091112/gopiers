@@ -1,4 +1,4 @@
-package main
+package basic
 
 import "fmt"
 import "strings"
@@ -61,7 +61,7 @@ func (c *Chain) Generate(n int) string {
 	return strings.Join(words, " ")
 }
 
-func main() {
+func main22() {
 	// Register command-line flags.
 	numWords := flag.Int("words", 100, "maximum number of words to print")
 	prefixLen := flag.Int("prefix", 2, "prefix length in words")
