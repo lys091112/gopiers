@@ -13,6 +13,7 @@ var count int
 func StartServer() {
 	http.HandleFunc("/", handle)
 	http.HandleFunc("/count", counter)
+	http.HandleFunc("/webhook", webhook)
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
 
@@ -25,4 +26,11 @@ func counter(w http.ResponseWriter, r *http.Request) {
 	count++
 	fmt.Fprintf(w, "count = %d\n", count)
 	mu.Unlock()
+}
+
+func webhook(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("hello")
+	r.Context()
+	method := r.Method
+	fmt.Fprintf(w, "method is %s", method)
 }
