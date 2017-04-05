@@ -7,6 +7,8 @@ import "log"
 type myHandler struct {
 }
 
+var mux map[string]func(w http.ResponseWriter, r *http.Request)
+
 func (*myHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
 	var path = r.URL.Path
 	fmt.Fprintf(w, "path is %s", path)

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/moon"
+	"github.com/lys091112/gopiers/insect"
 )
 
 func main() {
@@ -13,7 +13,9 @@ func main() {
 		panic(err)
 	}
 	fmt.Print(path)
-	moon.Start()
+	//moon.Start()
+
+	insect.Start()
 }
 
 //func path() {
