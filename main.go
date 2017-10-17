@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/insect"
+	"github.com/lys091112/gopiers/basic/channel"
 )
 
 func main() {
@@ -12,18 +12,24 @@ func main() {
 	if nil != err {
 		panic(err)
 	}
-	fmt.Print(path)
+	fmt.Println(path)
+
 	//moon.Start()
 
-	insect.Start()
+	//	insect.Start()
+
+	channel.SelectDemo()
+
 }
 
-//func path() {
-//	filePath := strings.Join([]string{path, "README.md"}, "/")
-//	fmt.Println(filePath)
-//	fileread.ReadUseBufio(filePath)
-//	network.GetUrl("https://baidu.com")
-//
-//	//	network.StartServer()
-//	basic.TestSha()
-//}
+/**
+func path() {
+	filePath := strings.Join([]string{path, "README.md"}, "/")
+	fmt.Println(filePath)
+	fileread.ReadUseBufio(filePath)
+	network.GetUrl("https://baidu.com")
+
+	//	network.StartServer()
+	basic.TestSha()
+}
+*/

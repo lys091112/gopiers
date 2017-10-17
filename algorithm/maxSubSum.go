@@ -1,10 +1,5 @@
 package algorithm
 
-import (
-	"fmt"
-	"os"
-)
-
 //通过扫描法来寻找最大和,O(n)
 //	    |-- numbers[i] 如果i==0或者f(i-1)<0
 //f(i)=>|
@@ -24,10 +19,6 @@ func MaxSubSum(numbers []int) int {
 		if max1 < sum1 {
 			max1 = sum1
 		}
-	}
-	path, err := os.Getwd()
-	if nil == err {
-		fmt.Println("-----" + path)
 	}
 	return max1
 }

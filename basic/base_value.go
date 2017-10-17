@@ -13,4 +13,9 @@ func float_demo() {
 	var c = imag(a)
 	fmt.Println(b)
 	fmt.Println(c)
+
+
+	// 通过var声明，默认会给予初始值
+	var i int
+	fmt.Printf(`i is %d`, i)
 }

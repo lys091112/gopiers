@@ -1,4 +1,4 @@
-package basic
+package mystrings
 
 import "bytes"
 import "fmt"
