@@ -3,3 +3,4 @@ bin/
 *.out
 *.html
 .DS_Store
+/vendor/*
