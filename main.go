@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/basic/channel"
 	"github.com/lys091112/gopiers/support/database"
 )
 
@@ -15,14 +14,8 @@ func main() {
 	}
 	fmt.Println(path)
 
-	//moon.Start()
+	database.DoInsert()
 
-	//	insect.Start()
-
-	channel.SelectDemo()
-
-	event := database.New(11, "hello")
-	fmt.Println(event)
 }
 
 /**
