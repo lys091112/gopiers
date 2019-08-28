@@ -11,7 +11,7 @@ type X struct {
 }
 
 func (x *X) String() string {
-	return fmt.Sprintf("%v", x)
+	return fmt.Sprintf("%+v", *x)
 }
 
 func reflect_demo() {

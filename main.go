@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/support/database"
+	"github.com/lys091112/gopiers/moon"
 )
 
 func main() {
@@ -14,8 +14,7 @@ func main() {
 	}
 	fmt.Println(path)
 
-	database.DoInsert()
-
+	moon.Start()
 }
 
 /**

@@ -5,40 +5,34 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
-
-type myHandler struct {
-}
-
-var mux map[string]func(w http.ResponseWriter, r *http.Request)
-
-func (*myHandler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
-	var path = r.URL.Path
-	fmt.Fprintf(w, "path is %s", path)
-}
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%v", "this is from 2")
 }
 
 func Start() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", sayHello)
-	mux.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("/home/langle/xianyue/download"))))
-	mux.HandleFunc("/ai-to-alert", get_proxy_info)
-	err := http.ListenAndServe(":8125", mux)
+	router := mux.NewRouter()
+	// gorilla/mux 和 http在处理匹配地址时不同
+	router.HandleFunc("/", sayHello)
+	router.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir("/Users/langle/Downloads/"))))
+	//router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/Users/langle/"))))
+	router.HandleFunc("/ai-to-alert", getProxyInfo)
+	err := http.ListenAndServe(":8125", router)
 	if err != nil {
 		log.Fatal("ListenAndServer: ", err)
 	}
 }
 
-func get_proxy_info(w http.ResponseWriter, r *http.Request) {
+func getProxyInfo(w http.ResponseWriter, r *http.Request) {
 	res := make(chan string)
-	go get_info(res)
+	go getInfo(res)
 	fmt.Fprintf(w, "%v", <-res)
 }
 
-func get_info(restr chan string) {
+func getInfo(r chan string) {
 	res, _ := http.Get("http://localhost:8000/distribute/alert-with-ai.html")
 	body := res.Body
 	defer body.Close()
@@ -46,7 +40,7 @@ func get_info(restr chan string) {
 	if res.StatusCode == 200 {
 		bodyBytes, _ := ioutil.ReadAll(body)
 		str := string(bodyBytes)
-		restr <- str
+		r <- str
 	}
-	restr <- "erro"
+	r <- "error"
 }

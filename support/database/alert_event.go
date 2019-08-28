@@ -1,13 +1,13 @@
 package database
 
 import (
-	"time"
-
-	"github.com/google/uuid"
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"strconv"
-	"database/sql"
+	"time"
+
+	"github.com/google/uuid"
 )
 
 type AlertEvent struct {
