@@ -61,7 +61,7 @@ func (u *UnionFind) find(i int) int {
 }
 
 // 返回集合分类,最终寻找的同一个父节点的
-func (u *UnionFind) collections() map[int][]int {
+func (u *UnionFind) Collections() map[int][]int {
 	res := make(map[int][]int)
 	for idx, v := range u.Data {
 		pI := u.find(v) // this is the code

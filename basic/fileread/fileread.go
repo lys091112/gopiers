@@ -21,3 +21,8 @@ func ReadUseBufio(path string) {
 		}
 	}
 }
+
+func BaseUse() {
+	path, _ := os.Getwd()
+
+}

@@ -5,5 +5,6 @@ func gcb(p, q int) int {
 		return p
 	}
 	r := p % q
+
 	return gcb(q, r)
 }

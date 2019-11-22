@@ -1,5 +1,7 @@
 package basic
 
+import "fmt"
+
 /**
 * 流程控制:
 	if a > 0 {
@@ -27,3 +29,30 @@ package basic
 		}
 	}
 **/
+
+func Control_TestA() {
+
+	fmt.Println("this is Test a")
+}
+
+func Control_TestB() (err error) {
+	defer func() {
+		if x := recover(); x != nil {
+			err = fmt.Errorf("test b error: %v", x)
+		}
+	}()
+
+	panic("demo panic")
+}
+
+func Control_TestC() {
+	fmt.Println("this is Test c")
+}
+
+func Controle_panic() {
+	Control_TestA()
+	err := Control_TestB()
+	fmt.Println(err)
+	Control_TestC()
+
+}

@@ -8,6 +8,6 @@ func TestIncreasingTriplet(test *testing.T) {
 	if res {
 		test.Log("success")
 	} else {
-		test.Error("except Result is true, but actual is %s", res)
+		test.Errorf("except Result is true, but actual is %t", res)
 	}
 }

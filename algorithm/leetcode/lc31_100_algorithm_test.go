@@ -2,6 +2,16 @@ package leetcode
 
 import "testing"
 
+func TestClimbStairs_70(t *testing.T) {
+	c := climbStairs_70(5)
+	if c == 8 {
+		t.Log("success")
+	} else {
+		t.Errorf("failed,except=%d actual=%d", 8, c)
+	}
+
+}
+
 func TestIsValidBST(t *testing.T) {
 	// [3,1,5,0,2,4,6]
 	//root := &TreeNode{Val: 3, Left: &TreeNode{Val: 1, Left: &TreeNode{Val: 0}, Right: &TreeNode{Val: 2}},
@@ -16,4 +26,8 @@ func TestIsValidBST(t *testing.T) {
 	} else {
 		t.Error("test failed!")
 	}
+}
+
+func TestSolveNQueens(t *testing.T) {
+	solveNQueens(4)
 }

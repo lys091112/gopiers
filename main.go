@@ -2,29 +2,15 @@ package main
 
 import (
 	"fmt"
-	"os"
-
-	"github.com/lys091112/gopiers/moon"
 )
 
 func main() {
-	path, err := os.Getwd()
-	if nil != err {
-		panic(err)
-	}
-	fmt.Println(path)
+	fmt.Println("hello world")
+	// path, err := os.Getwd()
+	// if nil != err {
+	// 	panic(err)
+	// }
+	// fmt.Println(path)
 
-	moon.Start()
+	// moon.Start()
 }
-
-/**
-func path() {
-	filePath := strings.Join([]string{path, "README.md"}, "/")
-	fmt.Println(filePath)
-	fileread.ReadUseBufio(filePath)
-	network.GetUrl("https://baidu.com")
-
-	//	network.StartServer()
-	basic.TestSha()
-}
-*/
