@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func main() {
 	fmt.Println("vim-go")
@@ -22,9 +25,10 @@ func Append(slice, data []byte) []byte {
 	return slice
 }
 
-var sem = make(chan int, MaxOutstanding)
+var sem = make(chan int, 10)
+var maxOutStanding = 10
 
-func handle(r *Request) {
+func handle(r *http.Request) {
 	<-sem
 	// Wait for active queue to drain.
 	process(r)
@@ -33,11 +37,11 @@ func handle(r *Request) {
 	// Done; enable next request to run.
 }
 func init() {
-	for i := 0; i < MaxOutstanding; i++ {
+	for i := 0; i < maxOutStanding; i++ {
 		sem <- 1
 	}
 }
-func Serve(queue chan *Request) {
+func Serve(queue chan *http.Request) {
 	for {
 		req := <-queue
 		go handle(req) // Don't wait for handle to finish.
@@ -45,10 +49,10 @@ func Serve(queue chan *Request) {
 }
 
 // 使用闭包,让req对每个go程都是唯一的
-func Serve2(queue chan *Request) {
+func Serve2(queue chan *http.Request) {
 	for req := range queue {
 		<-sem
-		go func(req *Request) {
+		go func(req *http.Request) {
 			process(req)
 			sem <- 1
 		}(req)
@@ -56,11 +60,11 @@ func Serve2(queue chan *Request) {
 }
 
 //同方法3,建立一个变量
-func Serve3(queue chan *Request) {
+func Serve3(queue chan *http.Request) {
 	for req := range queue {
 		<-sem
 		req := req
-		go func() {
+		go func(req *http.Request) {
 			process(req)
 			sem <- 1
 		}(req)
@@ -69,15 +73,19 @@ func Serve3(queue chan *Request) {
 
 //另一个途径是 启动 固定数量的 handle
 //Goroutine , 每个 Goroutine 都直接从 channel 中 读 取 请 求 。 这 个固定的数 值 就是同 时执 行 process 的最大并 发 数
-func handle4(queue chan *Request) {
+func handle4(queue chan *http.Request) {
 	for r := range queue {
 		process(r)
 	}
 }
-func Serve4(clientRequests chan *Request, quit chan bool) {
+func Serve4(clientRequests chan *http.Request, quit chan bool) {
 	// Start handlers
-	for i := 0; i < MaxOutstanding; i++ {
-		go handle(clientRequests)
+	for i := 0; i < maxOutStanding; i++ {
+		go handle(<-clientRequests)
 	}
 	<-quit // Wait to be told to exit.
+}
+
+func process(r *http.Request) {
+	fmt.Println(r.Method)
 }

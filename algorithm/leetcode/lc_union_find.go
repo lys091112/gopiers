@@ -24,8 +24,8 @@ func numIslands(grid [][]byte) int {
 	}
 
 	// 从左至右遍历当前i,j和[i][j+1] [i+1][j] 之间的联通关系
-	for i := 0; i < row; i ++ {
-		for j := 0; j < col; j ++ {
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
 			if grid[i][j] != '1' {
 				continue
 			}
@@ -91,7 +91,7 @@ func findParent(ns []int, idx int) int {
 	return ns[idx]
 }
 
-func numIslands_with_dfs(grid [][]byte) int {
+func numIslandsWithDfs(grid [][]byte) int {
 	if len(grid) <= 0 {
 		return 0
 	}
@@ -104,7 +104,7 @@ func numIslands_with_dfs(grid [][]byte) int {
 
 	size := 0
 	wayRecord := make(map[int]int, row*col)
-	for i := 0; i < row; i ++ {
+	for i := 0; i < row; i++ {
 		for j := 0; j < col; j++ {
 			if grid[i][j] == '0' {
 				continue
@@ -114,7 +114,7 @@ func numIslands_with_dfs(grid [][]byte) int {
 			}
 			wayRecord[i*col+j] = 1
 			scan(i, j, grid, col, row, wayRecord)
-			size += 1
+			size++
 		}
 	}
 

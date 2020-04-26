@@ -2,10 +2,10 @@ package leetcode
 
 import (
 	"container/list"
+	"fmt"
 	"sort"
 
 	"github.com/lys091112/gopiers/algorithm/base"
-	"github.com/lys091112/gopiers/algorithm/leetcode/util"
 )
 
 // N:946
@@ -63,20 +63,41 @@ func largestComponentSize(A []int) int {
 	find := base.UnionFind{}
 	find.MakeSet(len(A))
 
-	// 是否有优化的空间
-	for i := 0; i < len(A)-1; i++ {
-		for j := i + 1; j < len(A); j++ {
-			// 如果这俩是公约数大于1的，则进行连接
-			if util.Divisor(A[i], A[j]) > 1 {
-				find.Union(i, j)
+	tmax := 0
+	mv := make(map[int]int, len(A))
+	for i, v := range A {
+		if tmax < v {
+			tmax = v
+		}
+		mv[v] = i
+	}
+
+	mp := make(map[int]bool, tmax)
+
+	for i := 2; i < tmax; i++ {
+		if b, ok := mp[i]; ok && b {
+			continue
+		}
+		root := -1
+		if v, ok := mv[i]; ok && v >= 0 {
+			root = v
+		}
+		for j := i + i; j <= tmax; j += i {
+			if v, ok := mv[j]; ok {
+				if root == -1 {
+					root = v
+				} else {
+					find.Union(root, v)
+					fmt.Printf("compair, %d, (%d,%d)\n", i, A[root], j)
+				}
 			}
+			mp[j] = true
 		}
 	}
 
 	max := 0
-
 	m := find.Collections()
-
+	fmt.Println(m)
 	for _, v := range m {
 		if len(v) > max {
 			max = len(v)

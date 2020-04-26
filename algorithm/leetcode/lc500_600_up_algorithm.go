@@ -1,5 +1,64 @@
 package leetcode
 
+import (
+	"container/heap"
+	"fmt"
+
+	"github.com/lys091112/gopiers/algorithm/leetcode/util"
+)
+
+/**
+ * N:502 IPO
+ *  首先将数据按照起始资本进行分类, 然后在map中遍历并删除
+ *
+ *  ERROR way: 用map记录某个数据是否被访问过， 然后每次都要重新遍历全部的Capital,如果被访问过则忽略，这种方式
+ *  的问题是会造成执行超时，
+ */
+func findMaximizedCapital(k int, W int, Profits []int, Capital []int) int {
+	if k <= 0 {
+		return 0
+	}
+	fmt.Printf("profits=%v, Capital=%v\n", Profits, Capital)
+
+	m := make(map[int][]int, len(Capital))
+	for i, v := range Capital {
+		if _, ok := m[v]; !ok {
+			m[v] = make([]int, 0)
+		}
+		m[v] = append(m[v], Profits[i])
+	}
+
+	// 初始化堆元素时，一定要默认长度为0， 不然会引入冗余数据，影响结果
+	var h util.BigTopHeap = make([]int, 0)
+	heap.Init(&h)
+
+	// 停止条件为没有项目或者当前的k已经执行完
+	for {
+		if k <= 0 {
+			break
+		}
+		// 遍历起步资金，对所有小于当前资本的项目建立大顶堆，收益最大的先被执行
+		for key, value := range m {
+			if key <= W {
+				for _, v := range value {
+					heap.Push(&h, v)
+					fmt.Printf("input heap key=%d, value=%d\n", key, v)
+				}
+				delete(m, key)
+			}
+		}
+		if h.Len() <= 0 {
+			break
+		}
+		v := heap.Pop(&h)
+		W += v.(int)
+		k--
+		fmt.Printf("chioce: key=%d, value=%d,W=%d\n", k, v.(int), W)
+	}
+	return W
+
+}
+
 /**
  * N:540
  * 还有一种o(n) 的位运算方法：(可以用来应对无序数据）

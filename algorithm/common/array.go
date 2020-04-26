@@ -1,7 +1,8 @@
-package leetcode
+package common
 
 // 创建空二维数组
-func initArray(row int, col int) [][]int {
+func InitSlice(row int, col int) [][]int {
+
 	dp := make([][]int, row)
 	for i := 0; i < row; i++ {
 		dp[i] = make([]int, col)

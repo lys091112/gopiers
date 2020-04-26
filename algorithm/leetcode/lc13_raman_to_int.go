@@ -36,7 +36,7 @@ func romanToInt(s string) int {
 		} else {
 			if value, ok := m[s[i:i+2]]; ok {
 				sum += value
-				i += 1
+				i++
 			} else {
 				sum += m[s[i:i+1]]
 			}

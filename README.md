@@ -1,6 +1,26 @@
 # gopiers
 
 
+## use module
+
+    go list -m all #列出所有的依赖
+    go list -m -versions methodName #列出某个依赖的相关版本
+
+    go get golang.org/x/text #发现指定module的最新版本并更新
+    go get rsc.io/sampler@v1.3.1 #通过@加版本号来更新到指定版本
+
+    可以通过如下方式引入同一个module的不同版本
+    import (
+    "rsc.io/quote"
+    quoteV3 "rsc.io/quote/v3"
+    )
+
+    go mod tidy removes unused dependencies
+
+
+## go build
+
+    go help buildmod 可以查看build的类型
 
 ###测试
 

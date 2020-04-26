@@ -34,7 +34,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 
 		left := v[0]
 		right := v[1]
-		ingress[right] += 1
+		ingress[right]++
 		if _, ok := adj[left].exist[right]; !ok {
 			adj[left].exist[right] = true
 			adj[left].nodes = append(adj[left].nodes, right)
@@ -46,7 +46,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	for i := range ingress {
 		if ingress[i] == 0 {
 			l.PushFront(i)
-			n += 1
+			n++
 		}
 	}
 
@@ -59,10 +59,10 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		l.Remove(p)
 
 		for _, v := range adj[p.Value.(int)].nodes {
-			ingress[v] -= 1
+			ingress[v]--
 			if ingress[v] == 0 {
 				l.PushBack(v)
-				n += 1
+				n++
 			}
 		}
 	}

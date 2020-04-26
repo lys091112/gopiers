@@ -67,7 +67,7 @@ func dist(forest [][]int, x1, y1, x2, y2 int) int {
 		}
 
 		// 计算
-		for i := 0; i < 4; i ++ {
+		for i := 0; i < 4; i++ {
 			nr := v[2] + orient[0][i]
 			nc := v[3] + orient[1][i]
 
@@ -89,7 +89,7 @@ func dist(forest [][]int, x1, y1, x2, y2 int) int {
 func BFS(forest [][]int, x1, y1, x2, y2 int) int {
 	r, c := len(forest), len(forest[0])
 	seen := make([][]bool, r)
-	for i := 0; i < r; i ++ {
+	for i := 0; i < r; i++ {
 		seen[i] = make([]bool, c)
 	}
 	q := list.New()
@@ -109,7 +109,7 @@ func BFS(forest [][]int, x1, y1, x2, y2 int) int {
 		}
 		q.Remove(ele)
 
-		for i := 0; i < 4; i ++ {
+		for i := 0; i < 4; i++ {
 			nr := n[0] + orient[0][i]
 			nc := n[1] + orient[1][i]
 
@@ -127,6 +127,7 @@ func BFS(forest [][]int, x1, y1, x2, y2 int) int {
  * 思想： 动态规划
  * 状态转移方程：
  *    dp[i][n]=max(dp[i-1][n], dp[i-k][n-1]+sumRange(i-k+1, i));
+ *   TODO i < k 时，是否需要计算
  */
 func maxSumOfThreeSubarrays(nums []int, k int) []int {
 
@@ -138,14 +139,14 @@ func maxSumOfThreeSubarrays(nums []int, k int) []int {
 	prefixSum[0] = nums[0]
 
 	// 前缀和
-	for i := 1; i < len(nums); i ++ {
+	for i := 1; i < len(nums); i++ {
 		prefixSum[i] = prefixSum[i-1] + nums[i]
 	}
 
 	// 动态规划 dp 记录
-	dp := initArray(len(nums), 3)
+	dp := util.InitArray(len(nums), 3)
 	for n := 0; n < 3; n++ {
-		for i := 0; i < len(nums); i ++ {
+		for i := 0; i < len(nums); i++ {
 			prevL := 0
 			if i-1 >= 0 {
 				prevL = dp[i-1][n]
@@ -191,7 +192,7 @@ func maxSumOfThreeSubarrays(nums []int, k int) []int {
 		curr -= k
 	}
 
-	return Reverse(result)
+	return util.Reverse(result)
 }
 
 func maxInt(left, right int) int {

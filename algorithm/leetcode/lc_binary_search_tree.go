@@ -20,7 +20,7 @@ func countSmaller(nums []int) []int {
 
 	root := &TreeNode{Val: nums[length-1], Count: 0}
 
-	for i := length - 2; i >= 0; i -- {
+	for i := length - 2; i >= 0; i-- {
 		node := &TreeNode{Val: nums[i], Count: 0}
 		insertNode(root, node, result, length-i-1)
 	}
@@ -37,7 +37,7 @@ func countSmaller(nums []int) []int {
 func insertNode(parent *TreeNode, node *TreeNode, result []int, index int) {
 
 	if parent.Val >= node.Val {
-		parent.Count += 1
+		parent.Count++
 		if parent.Left == nil {
 			parent.Left = node
 		} else {
@@ -97,16 +97,16 @@ func mergeCallSamller(keys map[int]int, nums []Pair, low int, mid int, high int)
 	i, j := low, mid+1
 	k := 0
 
-	for ; i <= mid && j <= high; {
+	for i <= mid && j <= high {
 		if nums[i].Key.(int) > nums[j].Key.(int) {
 			t[k] = nums[j]
-			j += 1
+			j++
 		} else {
 			keys[nums[i].Value.(int)] += j - mid - 1
 			t[k] = nums[i]
-			i += 1
+			i++
 		}
-		k += 1
+		k++
 	}
 
 	for {
@@ -115,8 +115,8 @@ func mergeCallSamller(keys map[int]int, nums []Pair, low int, mid int, high int)
 		}
 		t[k] = nums[i]
 		keys[nums[i].Value.(int)] += j - mid - 1
-		i += 1
-		k += 1
+		i++
+		k++
 
 	}
 
@@ -125,8 +125,8 @@ func mergeCallSamller(keys map[int]int, nums []Pair, low int, mid int, high int)
 			break
 		}
 		t[k] = nums[j]
-		j += 1
-		k += 1
+		j++
+		k++
 	}
 	for idx, v := range t {
 		nums[idx+low] = v

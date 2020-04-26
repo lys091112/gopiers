@@ -2,6 +2,7 @@ package channel
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -102,3 +103,52 @@ func DeadLockPrac2() {
 	dead_ch <- "hello"
 }
 */
+
+func boring(msg string) <-chan string {
+	c := make(chan string)
+	go func() {
+		for i := 0; i < 100; i++ {
+			c <- fmt.Sprintf("%s: %d", msg, i)
+			time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+		}
+	}()
+	return c
+}
+
+func fatIn(input1, intpu2 <-chan string, quit <-chan bool) <-chan string {
+	c := make(chan string)
+	go func() {
+		for {
+			select {
+			case s := <-input1:
+				c <- s
+			case s := <-intpu2:
+				c <- s
+			case <-time.After(1 * time.Second):
+				fmt.Println("sleep one second")
+			case <- quit:
+				return // quit
+			}
+		}
+	}()
+	return c
+}
+
+// daisu chain
+// func f(left, right chan int) {
+//     left <- 1 + <-right
+// }
+
+// func main() {
+//     const n = 10000
+//     leftmost := make(chan int)
+//     right := leftmost
+//     left := leftmost
+//     for i := 0; i < n; i++ {
+//         right = make(chan int)
+//         go f(left, right)
+//         left = right
+//     }
+//     go func(c chan int) { c <- 1 }(right)
+//     fmt.Println(<-leftmost)
+// }

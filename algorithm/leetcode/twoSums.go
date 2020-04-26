@@ -13,9 +13,8 @@ func TwoSum(nums []int, target int) []int {
 		left := target - k
 		if value, ok := store[left]; ok {
 			return []int{value, middle}
-		}else {
-			store[k] = middle
 		}
+		store[k] = middle
 	}
 	return []int{}
 }

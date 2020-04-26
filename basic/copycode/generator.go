@@ -7,7 +7,7 @@ import (
 )
 
 func xrange() chan int {
-	var ch chan int = make(chan int)
+	ch := make(chan int)
 	go func() {
 		for i := 0; ; i++ {
 			ch <- i
@@ -17,7 +17,7 @@ func xrange() chan int {
 	return ch
 }
 
-func get_notification(user string) chan string {
+func getNotification(user string) chan string {
 	notify := make(chan string)
 
 	go func() {
@@ -45,7 +45,7 @@ func selectfoo() {
 	ch := make(chan int)
 
 	go func() {
-		for is_timeout := false; !is_timeout; {
+		for isTimeout := false; !isTimeout; {
 			select {
 			case v1 := <-c1:
 				ch <- v1
@@ -55,7 +55,7 @@ func selectfoo() {
 				ch <- v3
 			case <-timeout:
 				fmt.Println("timeout")
-				is_timeout = true
+				isTimeout = true
 				wait.Done()
 			}
 		}
@@ -107,15 +107,15 @@ func rand01() {
 	fmt.Println("rand01 end")
 }
 
-func main() {
+func txst() {
 	generator := xrange()
 
 	for i := 0; i < 10; i++ {
 		fmt.Println(<-generator)
 	}
 
-	joy := get_notification("joy")
-	daisy := get_notification("daisy")
+	joy := getNotification("joy")
+	daisy := getNotification("daisy")
 
 	fmt.Println(<-daisy)
 	fmt.Println(<-joy)

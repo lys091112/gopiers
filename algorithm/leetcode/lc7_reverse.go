@@ -43,12 +43,11 @@ func convert(str string) int {
 
 	if len(str) >= len(maxStr) && strings.Compare(str, maxStr) > 0 {
 		return 0
-	} else {
-		res, err := strconv.Atoi(str)
-		if err != nil {
-			return 0
-		}
-		return res
 	}
 
+	res, err := strconv.Atoi(str)
+	if err != nil {
+		return 0
+	}
+	return res
 }

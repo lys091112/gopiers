@@ -20,7 +20,7 @@ func TestUnion(t *testing.T) {
 	unionFind.Union(1, 5)
 	//unionFind.Union(0, 6)
 
-	res := unionFind.collections()
+	res := unionFind.Collections()
 
 	for _, v := range res {
 		fmt.Println(v)

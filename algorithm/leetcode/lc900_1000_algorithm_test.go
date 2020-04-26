@@ -24,6 +24,7 @@ func TestValidateStackSequences(t *testing.T) {
 }
 
 func TestLargestComponentSize(t *testing.T) {
-	s := largestComponentSize([]int{65, 35, 43, 76, 15, 11, 81, 22, 55, 92, 31})
-	resultOfInt(9, s, t)
+	s := largestComponentSize([]int{1, 2, 3, 4, 5, 6, 7, 8, 9})
+	// s := largestComponentSize([]int{65, 35, 43, 76, 15, 11, 81, 22, 55, 92, 31})
+	resultOfInt(6, s, t)
 }

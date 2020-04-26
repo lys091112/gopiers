@@ -1,6 +1,9 @@
 package leetcode
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestClimbStairs_70(t *testing.T) {
 	c := climbStairs_70(5)
@@ -10,6 +13,18 @@ func TestClimbStairs_70(t *testing.T) {
 		t.Errorf("failed,except=%d actual=%d", 8, c)
 	}
 
+}
+
+func TestMinPathSum(t *testing.T) {
+	grid := [][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}
+	way := minPathSum(grid)
+	t.Log(way)
+
+}
+
+func TestLongestValidParentheses(t *testing.T) {
+	s := "(()())"
+	t.Log(longestValidParentheses(s))
 }
 
 func TestIsValidBST(t *testing.T) {
@@ -28,6 +43,47 @@ func TestIsValidBST(t *testing.T) {
 	}
 }
 
+// N: 46
+func TestPermute(t *testing.T) {
+	r := permute([]int{1, 2, 3})
+
+	fmt.Printf("%v\n", r)
+}
+
+func TestTrap(t *testing.T) {
+	// height := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
+	// height := []int{5, 2, 1, 2, 1, 5}
+	height := []int{2, 0, 2}
+
+	if trapV2(height) == 6 {
+		t.Log("success")
+	} else {
+		t.Error("error")
+	}
+}
+
 func TestSolveNQueens(t *testing.T) {
 	solveNQueens(4)
+}
+
+func TestMinDistance(t *testing.T) {
+	l := minDistance("horse", "ros")
+	t.Log(l)
+}
+
+func TestLargestRectangleArea(t *testing.T) {
+	area := largestRectangleArea([]int{4, 2, 0, 3, 2, 5})
+	if area == 6 {
+		t.Log("success")
+	} else {
+		t.Error("failed")
+	}
+
+	area = largestRectangleArea([]int{3, 6, 5, 7, 4, 8, 1, 0})
+	if area == 20 {
+		t.Log("success")
+	} else {
+		t.Error("failed")
+	}
+
 }

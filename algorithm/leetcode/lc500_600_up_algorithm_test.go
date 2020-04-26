@@ -10,3 +10,8 @@ func TestSingleNonDuplicate(t *testing.T) {
 	t.Log("target: ", res)
 
 }
+
+func TestFindMaximizedCapital(t *testing.T) {
+	res := findMaximizedCapital(2, 0, []int{1, 2, 3}, []int{0, 1, 1})
+	t.Logf("res=%d", res)
+}
