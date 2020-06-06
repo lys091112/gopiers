@@ -6,8 +6,8 @@ import (
 	"net"
 	"time"
 )
-
-func Start() {
+// StartClock test
+func StartClock() {
 	listener, err := net.Listen("tcp", "localhost:8099")
 	if err != nil {
 		log.Fatal(err)

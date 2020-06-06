@@ -1,6 +1,9 @@
 package leetcode
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestFindWords(t *testing.T) {
 	words := []string{"oath", "pea", "eat", "rain"}
@@ -42,5 +45,59 @@ func TestFindWords4(t *testing.T) {
 
 	for _, v := range res {
 		println(v)
+	}
+}
+
+func Test_maximalSquare(t *testing.T) {
+	type args struct {
+		matrix [][]byte
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test",
+			args: args{matrix: [][]byte{{1, 0, 1, 0, 0},
+				{1, 0, 1, 1, 1},
+				{1, 1, 1, 1, 1},
+				{1, 0, 0, 1, 0}},
+			},
+			want: 4,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := maximalSquare(tt.args.matrix); got != tt.want {
+				t.Errorf("maximalSquare() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_findOrder(t *testing.T) {
+	type args struct {
+		numCourses    int
+		prerequisites [][]int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "findOrder01",
+			args: args{numCourses: 4,
+				prerequisites: [][]int{{1, 0}, {2, 0}, {3, 1}, {3, 2}}},
+			want: []int{0, 2, 1, 3},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := findOrderV2(tt.args.numCourses, tt.args.prerequisites); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("findOrder() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }

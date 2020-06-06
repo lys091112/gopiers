@@ -6,5 +6,6 @@ func gcb(p, q int) int {
 	}
 	r := p % q
 
+	// http.DefaultClient.Do()
 	return gcb(q, r)
 }

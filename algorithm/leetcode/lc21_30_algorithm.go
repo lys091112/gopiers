@@ -24,3 +24,16 @@ func doGenerateParenthesis(result *[]string, str string, left int, right int, n 
 		doGenerateParenthesis(result ,str+")", left, right+1, n)
 	}
 }
+
+
+/**
+ * N: 23
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+ func mergeKLists(lists []*ListNode) *ListNode {
+	return nil
+}

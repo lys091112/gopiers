@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Start_Clock_Client() {
+func startClockClient() {
 	conn, err := net.Dial("tcp", "localhost:8099")
 	if err != nil {
 		log.Fatal(err)

@@ -8,6 +8,105 @@ import (
 )
 
 /**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+	func dfs( root ) {
+		append(root)
+		dfs(root.left)
+		dfs(root.right)
+	}
+*/
+
+// N: 102 DFS
+func levelOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	result := make([][]int, 0)
+	// dfs
+	dfs102(root, &result, 0)
+	return result
+}
+
+func dfs102(node *TreeNode, result *[][]int, level int) {
+	if node == nil {
+		return
+	}
+	if len(*result) <= level {
+		*result = append(*result, make([]int, 0))
+	}
+	(*result)[level] = append((*result)[level], node.Val)
+
+	dfs102(node.Left, result, level+1)
+	dfs102(node.Right, result, level+1)
+}
+
+// MinStackV2 N: 155 最小栈
+// min(stack) = min(curr, min(stack-1))
+// 最小栈栈顶始终记录的是当前栈的最小值，因为栈没有乱序出栈的
+type MinStackV2 struct {
+	data   []int
+	minSet []int
+}
+
+// Constructor 初始化
+func Constructor() MinStackV2 {
+	m2 := MinStackV2{
+		data:   make([]int, 0),
+		minSet: make([]int, 0),
+	}
+	return m2
+}
+
+// Push  push
+func (th *MinStackV2) Push(x int) {
+
+	th.data = append(th.data, x)
+
+	// 最关键的地方，如果当前值不大于当前最小栈的栈顶，那么入栈，记录加入x后的栈最小值
+	if len(th.minSet) <= 0 || x <= th.minSet[len(th.minSet)-1] {
+		th.minSet = append(th.minSet, x)
+	}
+}
+
+// Pop pop
+func (th *MinStackV2) Pop() {
+	dataLen := len(th.data)
+	if dataLen > 0 {
+		top := th.Top()
+		th.data = th.data[0 : dataLen-1]
+		if th.GetMin() == top {
+			th.minSet = th.minSet[0 : len(th.minSet)-1]
+		}
+	}
+}
+
+// Top top
+func (th *MinStackV2) Top() int {
+	return th.data[len(th.data)-1]
+}
+
+// GetMin d
+func (th *MinStackV2) GetMin() int {
+	return th.minSet[len(th.minSet)-1]
+}
+
+// N: 136
+// 异或运算 任何数与自身异或都得0
+func singleNumber(nums []int) int {
+	r := nums[0]
+	for i := 1; i < len(nums); i++ {
+		r = r ^ nums[i]
+	}
+	return r
+}
+
+/**
  * N:174 地下城与勇士
  * 正着推不动可以考虑存活的最基本条件，保证存活的情况下来推导需要满足的最低生命力
  */
@@ -116,6 +215,6 @@ func dfs199(l *TreeNode, deep int, arr []int) {
 		// 因为如果遍历到第一个节点，长度就会改变，后边的遍历不会在影响arr
 		arr = append(arr, l.Val)
 	}
-	dfs199(l.Right,deep+1,arr)
-	dfs199(l.Left,deep+1,arr)
+	dfs199(l.Right, deep+1, arr)
+	dfs199(l.Left, deep+1, arr)
 }

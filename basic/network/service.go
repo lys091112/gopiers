@@ -10,6 +10,7 @@ import (
 var mu sync.Mutex
 var count int
 
+// StartServer 启动demo
 func StartServer() {
 	http.HandleFunc("/", handle)
 	http.HandleFunc("/count", counter)

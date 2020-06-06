@@ -11,7 +11,7 @@ import (
 )
 
 type AlertEvent struct {
-	UnqId         string
+	UnqId         string 
 	CycleId       int64
 	Key           string
 	RuleId        string
@@ -55,7 +55,7 @@ func (event AlertEvent) Insert() bool {
 	startTime := time.Now().Unix()
 	fmt.Printf("start time: %d\n", startTime)
 
-	num, err := process(stat,&event)
+	num, err := process(stat, &event)
 	CheckErr(err)
 
 	fmt.Printf("persist time: %d", time.Now().Unix()-startTime)
@@ -85,7 +85,7 @@ func DoInsert() bool {
 		for j := 0; j < 10000; j++ {
 			ruleId := "ALERT_AI_" + strconv.FormatInt(createTime, 10) + "_nodeType_Agent_" + strconv.Itoa(r.Intn(100))
 			event := Generator(ruleId, key, "HealthStatus", "Warning", tmp, tmp, int64(r.Intn(100)))
-			_,err = process(stat,event)
+			_, err = process(stat, event)
 			CheckErr(err)
 		}
 		fmt.Println("------------------------> " + strconv.Itoa(i))

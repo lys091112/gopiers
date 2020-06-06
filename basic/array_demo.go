@@ -146,7 +146,7 @@ func (p path) ToUpper() {
 
 // HACK 切片传递的是引用，因此可以修改切片引用对象的值
 // WARN 但是如果对切片进行追加，因为我们操作的只是切片的一个副本，因此对切片的append不会改变原切片的只，因此需要使用指针的方式
-// 可以参考 N: 46 
+// 可以参考 N: 46
 func addOneToEachElement(slice []byte) {
 	for i := range slice {
 		slice[i]++
@@ -159,9 +159,9 @@ func subtractOneFromLength(slice []byte) []byte {
 	return slice
 }
 
-
 // PtrSubtractOneFromLength 传递的是指针，因此可以通过修改指针中的引用，来修改sli指向的值
 // 与之上的方法比，从而可以感知指针和引用的区别
+// 可参考的实例： N:102
 func PtrSubtractOneFromLength(slicePtr *[]byte) {
 	slice := *slicePtr
 	*slicePtr = slice[0 : len(slice)-1]

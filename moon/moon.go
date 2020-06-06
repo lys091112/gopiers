@@ -2,7 +2,7 @@ package moon
 
 import (
 	"fmt"
-	"io/ioutil"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -10,37 +10,31 @@ import (
 )
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "%v", "this is from 2")
+	fmt.Fprintf(w, "%v", "welcome!")
 }
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("template/html/index.html")
+	if err != nil {
+		log.Println(err)
+	}
+	t.Execute(w, nil)
+}
+
+// Start 启动方法
 func Start() {
 	router := mux.NewRouter()
 	// gorilla/mux 和 http在处理匹配地址时不同
+	// 静态路由
+	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("template/css"))))
+	router.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("template/js"))))
+
+	// 动态路由
 	router.HandleFunc("/", sayHello)
-	router.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir("/Users/langle/Downloads/"))))
-	//router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("/Users/langle/"))))
-	router.HandleFunc("/ai-to-alert", getProxyInfo)
+	router.HandleFunc("/index", indexHandler)
 	err := http.ListenAndServe(":8125", router)
+	// err := http.ListenAndServeTLS(":443", "resources/server.crt", "resources/server.key", router)
 	if err != nil {
-		log.Fatal("ListenAndServer: ", err)
+		log.Fatalf("Moon Start error! %v", err)
 	}
-}
-
-func getProxyInfo(w http.ResponseWriter, r *http.Request) {
-	res := make(chan string)
-	go getInfo(res)
-	fmt.Fprintf(w, "%v", <-res)
-}
-
-func getInfo(r chan string) {
-	res, _ := http.Get("http://localhost:8000/distribute/alert-with-ai.html")
-	body := res.Body
-	defer body.Close()
-
-	if res.StatusCode == 200 {
-		bodyBytes, _ := ioutil.ReadAll(body)
-		str := string(bodyBytes)
-		r <- str
-	}
-	r <- "error"
 }

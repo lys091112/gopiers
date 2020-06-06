@@ -122,6 +122,76 @@ func BFS(forest [][]int, x1, y1, x2, y2 int) int {
 	return -1
 }
 
+// N: 678 有效的括号字符串
+// 既然*可以作为多种匹配，那么可以先出栈括号，括号不匹配时在出栈*
+func checkValidString(s string) bool {
+	if len(s) == 0 {
+		return true
+	}
+
+	if len(s) == 1 {
+		return s == "*"
+	}
+
+	stack := list.New()
+	for _, v := range []byte(s) {
+		if v == '(' || v == '*' {
+			stack.PushFront(v)
+		} else {
+			// 找到与有括号匹配的节点
+			node := find678Z(stack)
+			if node == nil {
+				return false
+			}
+			stack.Remove(node)
+		}
+	}
+
+	// 遍历完后如果栈不为空，那么需要将*作为右括号来匹配
+	l := 0
+	for {
+		if stack.Len() <= 0 {
+			break
+		}
+		top := stack.Front()
+		if top.Value.(byte) == '*' {
+			l++
+		} else {
+			l--
+			if l < 0 {
+				return false
+			}
+		}
+		stack.Remove(top)
+	}
+
+	return true
+}
+
+// 找到第一个需要被替换的节点 
+// 查找的原则是，先找为(的节点，如果找不到，那么找为*的节点，如果仍未找到，那么返回空
+func find678Z(stack *list.List) *list.Element {
+	if nil == stack {
+		return nil
+	}
+	t := stack.Front()
+	for {
+		if t == nil {
+			break
+		}
+		if t.Value.(byte) == ')' {
+			return nil
+		}
+
+		if t.Value.(byte) == '(' {
+			return t
+		}
+		t = t.Next()
+	}
+	// 返回头节点
+	return stack.Front()
+}
+
 /**
  * N: 689  三个无重叠子数组的最大和
  * 思想： 动态规划

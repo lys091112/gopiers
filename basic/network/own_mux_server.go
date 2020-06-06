@@ -22,7 +22,7 @@ func (*myhandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Start_Own() {
+func startOwn() {
 	server := http.Server{
 		Addr:        ":9090",
 		Handler:     &myhandler{},

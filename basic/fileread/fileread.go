@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// ReadUseBufio read
 func ReadUseBufio(path string) {
 	f, err := os.Open(path)
 	defer f.Close()

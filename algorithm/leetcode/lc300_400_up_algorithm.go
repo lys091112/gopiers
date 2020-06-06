@@ -44,7 +44,7 @@ func palindromePairs(words []string) [][]int {
 		// 查询右半部分，找出回文串切点 如 abacd 以ac之间为切点
 		for k := 1; k < len(v); k++ {
 			if isPalindrome(v[0:k]) {
-				if j, ok := wordMap[reverseString(v[k:len(v)])]; ok {
+				if j, ok := wordMap[reverseString(v[k:])]; ok {
 					result = append(result, []int{j, i})
 				}
 			}

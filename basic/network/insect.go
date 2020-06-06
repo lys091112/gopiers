@@ -1,4 +1,4 @@
-package insect
+package network
 
 import (
 	"fmt"
@@ -50,7 +50,7 @@ func download(url string) string {
 	return "hello"
 }
 
-func Start() {
-	url := "https://www.kernel.org/doc/Documentation/"
-	download(url)
-}
+// func Start() {
+// 	url := "https://www.kernel.org/doc/Documentation/"
+// 	download(url)
+// }

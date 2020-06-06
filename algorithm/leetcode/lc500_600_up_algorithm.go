@@ -112,3 +112,30 @@ func singleNonDuplicate(nums []int) int {
 func isOdd(n int) bool {
 	return n%2 == 1
 }
+
+// N: 560 和为K的子数组
+func subarraySum(nums []int, k int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	// <前缀和 , 在当前下标下，该前缀和存在的次数>
+	sfMap := map[int]int{}
+	sfMap[0] = 1
+	res, t := 0, 0
+
+	// 在遍历中就可以进行计算，因为我们只计算比
+	//当前下标小的值，而这些值已经被计算过了
+	// 查询当前前缀和-k（即已经计算过的前缀和）是否存在，以及存在的次数
+	for _, v := range nums {
+		t += v
+		// 存在，那么增加统计量
+		if value, ok := sfMap[t-k]; ok {
+			res += value
+		}
+		sfMap[t]++
+	}
+	fmt.Printf("m=%v\n", sfMap)
+	return res
+
+}

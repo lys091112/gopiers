@@ -1,6 +1,6 @@
 package leetcode
 
-import "github.com/lys091112/gopiers/container"
+import "github.com/lys091112/gopiers/basic/container"
 
 type MinStack struct {
 

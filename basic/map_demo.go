@@ -38,4 +38,12 @@ func map_demo() {
 		fmt.Printf("key is %s -- value is: %d\n", key, value)
 	}
 
+	intMap := map[int]int{}
+
+	intMap[0] += 2
+
+	fmt.Printf("intMap=%v\n", intMap)
+
+	fmt.Printf("intMap.2=%d\n", intMap[2])
+
 }

@@ -51,6 +51,51 @@ func longestValidParentheses(s string) int {
 	return max
 }
 
+// N: 33 搜索旋转排序数组
+// 题目的前提是有序数组以未知位进行了旋转
+// 说明 这个是两段有序的数组 进行二分查找时，
+// 考虑临界条件，到底应不应该等于边界值
+func search33(nums []int, target int) int {
+	if len(nums) <= 0 {
+		return -1
+	}
+
+	if len(nums) == 1 {
+		if nums[0] == target {
+			return 0
+		}
+		return -1
+	}
+
+	l, r := 0, len(nums)-1
+	for {
+		if l > r {
+			return -1
+		}
+
+		middle := (l + r) / 2
+		if nums[middle] == target {
+			return middle
+		}
+
+		if nums[0] <= nums[middle] { // 代表 0-middle 有序
+			if nums[0] <= target && target < nums[middle] { // 是否在有序队列中
+				r = middle - 1
+			} else {
+				l = middle + 1
+			}
+
+		} else {
+			// 代表 middle+1 len(nums-1) 有序
+			if nums[middle] <= target && target <= nums[r] { // 是否在有序队列中
+				l = middle + 1
+			} else {
+				r = middle - 1
+			}
+		}
+	}
+}
+
 /**
  * N: 39
  * 数组中出现次数超过一半的数字
@@ -132,6 +177,57 @@ func trapV2(height []int) int {
 	}
 
 	return area
+}
+
+/* ------------------------ */
+// N: 45 跳跃游戏 II
+// 动态规划
+func jump(nums []int) int {
+
+	// dp[m] = min(dp[m-1], dp[m-2], ... , dp[0]) + 1  which dp_i + nums[i] >= m
+	if len(nums) == 0 {
+		return 0
+	}
+
+	dp := make([]int, len(nums))
+	dp[0] = 0
+	for i := 1; i < len(nums); i++ {
+		dp[i] = len(nums) + 1
+		for j := i - 1; j >= 0; j-- {
+			if j+nums[j] >= i && dp[i] > dp[j]+1 {
+				dp[i] = dp[j] + 1
+			}
+		}
+		fmt.Printf("dp[%d]=%d\n", i, dp[i])
+	}
+
+	return dp[len(nums)-1]
+}
+
+// 贪心算法
+// 记录每个节点能跳的最远的距离，满足一定的条件才更新step
+func jumpV2(nums []int) int {
+
+	if len(nums) == 0 {
+		return 0
+	}
+	step := 0
+	maxDistance := 0
+	maxInx := 0
+
+	// 记录当前能跳的最远距离
+	// 如果当前节点等于记录的最远节点，那么step+1，并且更新最远距离
+	for i := 0; i < len(nums)-1; i++ {
+		// 记录的是从上一个节点到它能跳到的节点之间，能到达的最大距离。从而更新step，并置maxDistance为最远距离
+		if maxDistance < nums[i]+i {
+			maxDistance = nums[i] + i
+		}
+		if i == maxInx {
+			step++
+			maxInx = maxDistance
+		}
+	}
+	return step
 }
 
 // N: 46 全排列
@@ -256,6 +352,140 @@ func isFit51(a []int, rowM, rowN int) bool {
 	}
 
 	return true
+}
+
+// N: 50 Pow(x, n) 二分查找
+// 迭代法
+func myPow(x float64, n int) float64 {
+	if n == 0 {
+		return 1
+	}
+
+	k := n
+	if n < 0 {
+		k = -n
+	}
+	res := 1.0
+	for i := k; i > 0; i = i / 2 {
+		// 偶数直接double
+		// 基数 乘x然后在double
+		if i%2 != 0 {
+			res *= x
+		}
+		x *= x
+	}
+
+	if n < 0 {
+		return 1 / res
+	}
+	return res
+}
+
+// 递归 方式  （方法还是使用二分的方法）
+func myPow50(x float64, n int) float64 {
+	if n > 0 {
+		return p50(x, n)
+	}
+
+	return 1.0 / p50(x, n)
+}
+func p50(x float64, n int) float64 {
+	if n == 0 {
+		return 1.0
+	}
+	if n == 1 {
+		return x
+	}
+
+	res := p50(x, n/2)
+	if n%2 == 0 {
+		return res * res
+	}
+
+	return res * res * x
+}
+
+// N: 54  螺旋矩阵
+// 可以理解为一圈一圈的遍历，每次遍历完减少两行 减少两列，然后重新开始
+// 另一种解法是使用方向数组[[0, 1](列+1), [1, 0], [0, -1], [-1, 0]]
+func spiralOrder(matrix [][]int) []int {
+	if len(matrix) == 0 {
+		return []int{}
+	}
+	if len(matrix) == 1 {
+		return matrix[0]
+	}
+
+	return spiralOrder54(&matrix, 0, 0, len(matrix)-1, len(matrix[0])-1)
+}
+
+// 利用方向数
+func spiralOrderV2(matrix [][]int) []int {
+	if len(matrix) == 0 {
+		return []int{}
+	}
+	if len(matrix) == 1 {
+		return matrix[0]
+	}
+	res := make([]int, 0)
+	row, col := len(matrix), len(matrix[0])
+	fx := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+	x, y, dt := 0, 0, 0
+	edge := []int{0, col - 1, row - 1, 0}
+	for i := 0; i < row*col; i++ {
+		res = append(res, matrix[x][y])
+		x2, y2 := x+fx[dt][0], y+fx[dt][1]
+		// 如果已经越过边界了，则需要转向
+		if x2 < edge[0] || x2 > edge[2] || y2 < edge[3] || y2 > edge[1] {
+			if dt == 1 || dt == 2 {
+				edge[dt]--
+			} else {
+				edge[dt]++
+			}
+			dt = (dt + 1) % 4
+			x2, y2 = x+fx[dt][0], y+fx[dt][1]
+		}
+		x, y = x2, y2
+	}
+
+	return spiralOrder54(&matrix, 0, 0, len(matrix)-1, len(matrix[0])-1)
+}
+
+func spiralOrder54(matrix *[][]int, x, y, row, col int) []int {
+	res := make([]int, 0)
+	if x == row {
+		return append(res, (*matrix)[x][y:col+1]...)
+	}
+	if y == col {
+		for i := x; i <= row; i++ {
+			res = append(res, (*matrix)[i][y])
+		}
+		return res
+	}
+
+	// 循环获取数据 行 列 行列
+	//[x,(x...col-1)]
+	for c := y; c < col; c++ {
+		res = append(res, (*matrix)[x][c])
+	}
+	// [(x ... row),col]
+	for r := x; r < row; r++ {
+		res = append(res, (*matrix)[r][col])
+	}
+	// [row,(col-1,y)]
+	for c := col; c > y; c-- {
+		res = append(res, (*matrix)[row][c])
+	}
+	// 遍历起始列
+	// [(col ... x+1), y]
+	for r := row; r > x; r-- {
+		res = append(res, (*matrix)[r][y])
+	}
+
+	if row-x > 1 && col-y > 1 {
+		res = append(res, spiralOrder54(matrix, x+1, y+1, row-1, col-1)...)
+	}
+	return res
 }
 
 /**
