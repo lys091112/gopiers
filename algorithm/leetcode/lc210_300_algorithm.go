@@ -272,3 +272,24 @@ func min221(a, b, c int) int {
 	}
 	return min
 }
+
+// 242
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
+	counter := [26]byte{}
+
+	for i := 0; i < len(s); i++ {
+		counter[s[i]-'a']++
+		counter[t[i]-'a']--
+	}
+
+	for _, v := range counter {
+		if v != 0 {
+			return false
+		}
+	}
+	return true
+}

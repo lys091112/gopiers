@@ -1,7 +1,6 @@
 package channel
 
 import (
-	"context"
 	"fmt"
 	"testing"
 	"time"
@@ -69,7 +68,7 @@ func TestO1(test *testing.T) {
 }
 
 func TestO2(test *testing.T) {
-	context.WithTimeout()
+	// context.WithTimeout()
 	ch := make(chan int, 1)
 	ch <- 1
 	select {

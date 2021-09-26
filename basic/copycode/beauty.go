@@ -78,6 +78,8 @@ func handle4(queue chan *http.Request) {
 		process(r)
 	}
 }
+
+// Serve4 xx
 func Serve4(clientRequests chan *http.Request, quit chan bool) {
 	// Start handlers
 	for i := 0; i < maxOutStanding; i++ {

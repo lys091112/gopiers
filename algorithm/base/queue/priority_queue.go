@@ -32,3 +32,11 @@ func (q *PriorityQueue) Pop() interface{} {
 	*q = (*q)[:n-1]
 	return r
 }
+
+func (q *PriorityQueue) Front() interface{} {
+	if 0 == q.Len() {
+		return nil
+	}
+
+	return (*q)[q.Len()-1]
+}

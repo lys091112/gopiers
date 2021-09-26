@@ -106,6 +106,118 @@ func singleNumber(nums []int) int {
 	return r
 }
 
+// N: 141 环形链表
+// 1. 快慢指针来判断是否有重合
+// 2. 通过hash来记录某个节点是否已经访问过了
+func hasCycle(head *ListNode) bool {
+	if nil == head {
+		return false
+	}
+	if head.Next == nil {
+		return false
+	}
+
+	slow, fast := head, head
+
+	for {
+		if slow == nil {
+			return false
+		} else if nil == fast || nil == fast.Next {
+			return false
+		} else {
+			slow = slow.Next
+			fast = fast.Next.Next
+			if slow == fast {
+				return true
+			}
+		}
+	}
+}
+
+/**
+ * N: 144
+ * 方法的使用
+ */
+ func preorderTraversal(root *TreeNode) (vals []int) {
+	 if root == nil {
+		 return []int{}
+	 }
+	 // 通过函数闭包的使用
+	 var preorder func(*TreeNode)
+	 preorder = func(node *TreeNode) {
+		if node == nil {
+			return
+		} 
+		vals = append(vals, node.Val)
+		preorder(node.Left)
+		preorder(node.Right)
+	 }
+
+	 preorder(root)
+	 return 
+
+	//  result := make([]int,0)
+	//  result = traversal(root, result)
+	// return result 
+}
+
+// 迭代方式
+ func preorderTraversalV2(root *TreeNode) (vals []int) {
+	 if root == nil {
+		 return []int{}
+	 }
+
+	 stack := []*TreeNode{}
+	 node := root
+	 for node != nil || len(stack) > 0 {
+		 // 遍历所有的左节点并依次入栈
+		for node != nil {
+			stack = append(stack, node)
+			vals = append(vals, node.Val)
+			node = node.Left
+		}
+		// 获取右节点
+		node = stack[len(stack) - 1].Right
+		stack = stack[:len(stack)-1] // 最后一个节点出栈
+	 }
+
+	 return
+ }
+
+func traversal(node *TreeNode, result []int) []int {
+	if node == nil {
+		return result
+	}
+	result = append(result, node.Val)
+	result = traversal(node.Left, result)
+	result = traversal(node.Right,result)
+	return result
+}
+
+/**
+ * N: 169 
+ */
+func majorityElementImprove(nums []int) int {
+
+	var k int = nums[0]
+	count := 0
+
+	for _, v := range nums {
+		if count == 0 {
+			k = v
+			count++
+		}else {
+			if k == v {
+				count++
+			}else {
+				count--
+			}
+		}
+	}
+
+	return k 
+}
+
 /**
  * N:174 地下城与勇士
  * 正着推不动可以考虑存活的最基本条件，保证存活的情况下来推导需要满足的最低生命力

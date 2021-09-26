@@ -12,6 +12,8 @@ const (
 	BufferAppender
 )
 
+// https://zhuanlan.zhihu.com/p/48865454 字符串性能对比
+
 func StringAppender(choice, n int) (d time.Duration) {
 	v := "Be Alive Keep Fighting!"
 	var s string

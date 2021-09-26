@@ -2,6 +2,8 @@ package basic
 
 import (
 	"fmt"
+	"runtime"
+	"sync"
 )
 
 /**
@@ -23,4 +25,35 @@ func f() (result int) {
 func g() {
 	a := f()
 	fmt.Println(a) //result a = 2
+}
+
+// 闭包的理解
+
+// Increase n成为了闭包方法的共用变量
+func Increase() func() int {
+	n := 0
+	return func() int {
+		n++
+		return n
+	}
+}
+
+// 现象的原因在于闭包共享外部的变量i，注意到，每次调用go就会启动一个goroutine，这需要一定时间；
+// 但是，启动的goroutine与循环变量递增不是在同一个goroutine，可以把i认为处于主goroutine中。
+// 启动一个goroutine的速度远小于循环执行的速度，所以即使是第一个goroutine刚起启动时，外层的循环也执行到了最后一步了。
+// 由于所有的goroutine共享i，而且这个i会在最后一个使用它的goroutine结束后被销毁，所以最后的输出结果都是最后一步的i==5。
+func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		go func() {
+			fmt.Println(i)
+			wg.Done()
+		}()
+		// 等待与不等待的区别是很大的
+		// time.Sleep(1 * time.Second) // 设置时间延时1秒
+	}
+	wg.Wait()
 }

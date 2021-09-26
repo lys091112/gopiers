@@ -62,3 +62,39 @@ func lastStoneWeight(stones []int) int {
 	}
 	return 0
 }
+
+// letaeta
+// N:1081 最小子序列
+func smallestSubsequence(s string) string {
+	m := make(map[byte]int,len(s))
+	cs := []byte(s)
+	for _,v := range cs {
+		m[v]++
+	}
+
+	stack := []byte{}
+	existKey := make(map[byte]bool,0)
+
+	for _,v := range cs {
+		if !existKey[v] {
+			// 这里使用循环，是为了递归检查栈顶元素，将满足条件的依次出队
+			for len(stack) > 0 && stack[len(stack)-1] > v  {
+				topV := stack[len(stack)-1]
+				// 为了保证每个元素最少存在依次，如果后边未检查的数据不包含该元素，那么该元素就不能出队
+				if m[topV]== 0 {
+					break
+				}
+
+				stack = stack[:len(stack)-1]
+				existKey[topV] = false
+			}
+			stack = append(stack,v)
+			existKey[v] = true
+		}	
+		m[v]--
+	}
+
+	return string(stack) 
+}
+
+

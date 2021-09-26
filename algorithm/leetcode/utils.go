@@ -42,6 +42,7 @@ func If(b bool, v1 interface{}, v2 interface{}) interface{} {
 	}
 }
 
+// ListNode 通用数据结构
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -77,3 +78,27 @@ func buildListNode(nums []int) *ListNode {
 	return result
 }
 
+func buildListNodeWithCycle(nums []int, pos int) *ListNode {
+	var result *ListNode
+	var end *ListNode
+	var tmp *ListNode
+
+	for i, v := range nums {
+		if result == nil {
+			result = &ListNode{Val: v, Next: nil}
+			end = result
+		} else {
+			newNode := &ListNode{Val: v, Next: nil}
+			end.Next = newNode
+			end = newNode
+		}
+		if i == pos {
+			tmp = end
+		}
+	}
+	if tmp != nil {
+		end.Next = tmp
+	}
+
+	return result
+}

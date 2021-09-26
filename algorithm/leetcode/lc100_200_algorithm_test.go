@@ -51,3 +51,90 @@ func Test_levelOrder(t *testing.T) {
 		})
 	}
 }
+
+func Test_hasCycle(t *testing.T) {
+	type args struct {
+		head *ListNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "test01",
+			args: args{buildListNodeWithCycle([]int{3, 2, 0, -4}, 1)},
+			want: true,
+		},
+		{
+			name: "test02",
+			args: args{buildListNodeWithCycle([]int{1, 2}, 0)},
+			want: true,
+		},
+		{
+			name: "test03",
+			args: args{buildListNodeWithCycle([]int{1}, -1)},
+			want: false,
+		},
+		{
+			name: "test04",
+			args: args{buildListNodeWithCycle([]int{1}, 0)},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := hasCycle(tt.args.head); got != tt.want {
+				t.Errorf("hasCycle() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_preorderTraversal(t *testing.T) {
+	type args struct {
+		root *TreeNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "test01",
+			args: args{root: &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}},
+			want: []int{1, 2, 3},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := preorderTraversal(tt.args.root); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("preorderTraversal() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_majorityElementImprove(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "test01",
+			args:args{nums:[]int{2,2,1,3,1,1,4,1,1,5,1,1,6}},
+			want: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := majorityElementImprove(tt.args.nums); got != tt.want {
+				t.Errorf("majorityElementImprove() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

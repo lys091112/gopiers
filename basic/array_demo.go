@@ -61,6 +61,25 @@ func make_use() {
 	for _, v := range b {
 		fmt.Println(v)
 	}
+
+	n := []int{1, 2, 3, 4, 5}
+	fmt.Printf("%%p --> %p\n", &n)
+	changeArray(n)
+	fmt.Println(n)
+
+	n1 := 5
+	changeN1(n1)
+	fmt.Println(n1)
+
+}
+
+func changeArray(n []int) {
+	n[2] = 4
+	fmt.Printf("%%p --> %p\n", &n)
+}
+
+func changeN1(n1 int) {
+	n1 = 7
 }
 
 /**

@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+// 关闭原则
+// 1. 永远不要尝试在读取端关闭 channel ，写入端无法知道 channel 是否已经关闭，往已关闭的 channel 写数据会 panic ；
+// 2. 一个写入端，在这个写入端可以放心关闭 channel；
+// 3. 多个写入端时，不要在写入端关闭 channel ，其他写入端无法知道 channel 是否已经关闭，关闭已经关闭的 channel 会发生 panic （你要想个办法保证只有一个人调用 close）；
+// 4. channel 作为函数参数的时候，最好带方向；
+
 /**
 *一旦main函数结束,那么go函数也会结束
 func main() {
@@ -67,20 +73,6 @@ func SelectDemo() {
 	}
 }
 
-/*
-func Select_Demo() {
-	ch := make(chan int)
-	for i := 0; i < 10; i++ {
-		select {
-		case ch <- i:
-			// do nothind
-		case x := <-ch:
-			fmt.Println(x)
-		}
-	}
-}
-*/
-
 func DeadLockPrac() {
 	dead_ch := make(chan string)
 	go readFromDeadLockChan(dead_ch)
@@ -115,11 +107,24 @@ func boring(msg string) <-chan string {
 	return c
 }
 
+// 	下面方法等价于
+// while(true) {
+// 	if (hasValue(input1)) {
+// 		do something	
+// 	}else if (hasValue(input2)) {
+// 		do something	
+// 	}else if(hasAfterOneMinute) {
+// 		do something	
+// 	}else if hasValue(quit) {
+// 		return 
+// 	}
+// }
 func fatIn(input1, intpu2 <-chan string, quit <-chan bool) <-chan string {
 	c := make(chan string)
 	go func() {
 		for {
 			select {
+				// 被翻译为 runtime.go ==> selectnbrecv1(...)
 			case s := <-input1:
 				c <- s
 			case s := <-intpu2:
@@ -134,7 +139,7 @@ func fatIn(input1, intpu2 <-chan string, quit <-chan bool) <-chan string {
 	return c
 }
 
-// daisu chain
+// daisy chain
 // func f(left, right chan int) {
 //     left <- 1 + <-right
 // }

@@ -19,7 +19,9 @@ func TestReadUseBufio(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ReadUseBufio(tt.args.path)
+			ReadUseBufio(tt.args.path,func(string){
+
+			})
 		})
 	}
 }
@@ -36,6 +38,21 @@ func TestBaseUse(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			BaseUse()
+		})
+	}
+}
+
+func Test_readMmap(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{
+			name:"test01",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			readMmap()
 		})
 	}
 }
