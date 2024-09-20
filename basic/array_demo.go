@@ -3,6 +3,7 @@ package basic
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 )
 
 /**
@@ -218,3 +219,51 @@ func SubNums(nums []int, i int) []int {
 	r = append(r, nums[i+1:]...)
 	return r
 }
+
+func SliceAppendDemo() {
+	a1 := [5]int{1,2,3,4,5}
+	s1 := a1[1:3]
+	for i, v := range s1 {
+		fmt.Printf("%d,%d\n", i, v)
+	}
+	fmt.Printf("s1 address: %p,  a1 address: %p \n" , &s1 , &a1)
+	
+	s1 = append(s1, 6)
+	for i, v := range s1 {
+		fmt.Printf("%d,%d\n", i, v)
+	}
+	fmt.Printf("s1 address: %p\n" , &s1)
+
+
+	st := SliceT{cost: 0}
+
+	appendValue(&st,0)
+
+	fmt.Print(st.cost)
+	for st.child != nil {
+		fmt.Print(st.child[0].cost)
+		st = *st.child[0]
+	}
+	fmt.Println()
+
+}
+// {0 [{1 []}]} child []SliceT
+// want {0 [{1 [{2 [{3,[....]}]}]}]} how to fix, 将[]SliceT 改为 []*SliceT
+func appendValue(st *SliceT,cost int) {
+	fmt.Println("append cost=" + strconv.Itoa(cost))
+	if cost > 5 {
+		return
+	}
+	c := cost + 1
+	node := SliceT{cost: c}
+	st.child = append(st.child, &node)
+	appendValue(&node,c)
+
+}
+
+type SliceT struct {
+	cost int
+	child []*SliceT
+	// child []SliceT
+}
+

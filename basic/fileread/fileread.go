@@ -39,13 +39,13 @@ func ReadUseBufio(filePath string, handle func(string)) error {
 		if err == nil {
 			line = strings.TrimSpace(line)
 			handle(line)
-		}else if err == bufio.ErrBufferFull {
+		} else if err == bufio.ErrBufferFull {
 			// 代表读取的文件为读完整行缓冲区就满了，需要特殊处理
 			// TODO 需要记录中间结果
-		}else if err == io.EOF{
-			return nil 
+			return err
+		} else if err == io.EOF {
+			return nil
 		}
-		return err
 	}
 }
 
@@ -59,7 +59,7 @@ func ReadUseScanner(filePath string, handle func(string)) error {
 	}
 	buffer := bufio.NewScanner(f)
 
-	for buffer.Scan(){
+	for buffer.Scan() {
 		handle(buffer.Text())
 	}
 	if buffer.Err() != nil {
@@ -135,4 +135,3 @@ func BaseUse() {
 	fmt.Println(path)
 
 }
-

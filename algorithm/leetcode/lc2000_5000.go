@@ -31,6 +31,41 @@ func maxCoins(piles []int) int {
 	return num
 }
 
+// N: 2024 考试的最大困扰度
+func maxConsecutiveAnswers(answerKey string, k int) int {
+	if answerKey == "" {
+		return 0
+	}
+
+	return util.Max(getCnt(answerKey,'T', k), getCnt(answerKey,'F', k))
+}
+
+// getCnt 获取ij 区间内 ==c的数量不超过k的最大长度
+func getCnt(answerKey string,c byte, k int) int {
+	ans,cnt :=0, 0
+	 i, j :=0, 0
+	for {
+		if  j >= len(answerKey)  {
+			break
+		}
+		if answerKey[j] == c {
+			cnt++
+		}
+		j++
+		
+		for cnt >= k {
+			if answerKey[i] == c {
+				cnt--
+			}
+			i++
+		}
+		
+		ans = util.Max(ans, j-i+1)
+	}
+	return ans
+}
+
+
 // N: 最大网络秩
 // O(N^2)  考虑一种O(M+N)复杂度的算法
 func maximalNetworkRank(n int, roads [][]int) int {

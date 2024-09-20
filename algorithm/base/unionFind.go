@@ -32,7 +32,6 @@ func (unionFind *UnionFind2) Init_set() {
 		father[i] = i
 		rank[i] = 0
 	}
-	fmt.Println("hello, world")
 }
 
 func (unionFind *UnionFind2) Find(x int) int {

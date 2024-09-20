@@ -180,8 +180,8 @@ func Test_minimumTimeRequired(t *testing.T) {
 		want int
 	}{
 		{
-			name:"test01",
-			args: args{jobs:[]int{38,49,91,59,14,76,84},k:3},
+			name: "test01",
+			args: args{jobs: []int{38, 49, 91, 59, 14, 76, 84}, k: 3},
 			want: 140,
 		},
 	}
@@ -189,6 +189,31 @@ func Test_minimumTimeRequired(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := minimumTimeRequired(tt.args.jobs, tt.args.k); got != tt.want {
 				t.Errorf("minimumTimeRequired() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_maxConsecutiveAnswers(t *testing.T) {
+	type args struct {
+		answerKey string
+		k         int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name:"test01",
+			args: args{answerKey: "TTFFTT", k: 1},
+			want: 3,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := maxConsecutiveAnswers(tt.args.answerKey, tt.args.k); got != tt.want {
+				t.Errorf("maxConsecutiveAnswers() = %v, want %v", got, tt.want)
 			}
 		})
 	}
