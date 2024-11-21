@@ -139,21 +139,89 @@ func fatIn(input1, intpu2 <-chan string, quit <-chan bool) <-chan string {
 	return c
 }
 
-// daisy chain
-// func f(left, right chan int) {
-//     left <- 1 + <-right
-// }
+/**
+	Flag: close 
+	Return: MainGoRuntine
+	Reason: 
+ **/
+func colse_demo() {
+	ch := make(chan bool)
 
-// func main() {
-//     const n = 10000
-//     leftmost := make(chan int)
-//     right := leftmost
-//     left := leftmost
-//     for i := 0; i < n; i++ {
-//         right = make(chan int)
-//         go f(left, right)
-//         left = right
-//     }
-//     go func(c chan int) { c <- 1 }(right)
-//     fmt.Println(<-leftmost)
-// }
+	go func(){
+		// v:false  ok : false 
+		v, ok := <- ch
+		fmt.Print("GoRuntine ", v, ok)
+
+		// 从关闭的channel可以一直获取到值（类型的默认值）
+		// for {
+		// 	v := <- ch
+		// 	fmt.Println("tt --> " , v)
+		// }
+	}()
+	time.After(time.Second * 2)
+	close(ch)
+	time.After(time.Second * 1)
+	fmt.Println("Main")
+}
+
+// 非阻塞示例，需要有default来退出
+func select_cycle() {
+	ch := make(chan int)
+	timeout := make(chan bool)
+	finish := false
+	go func() {
+		time.Sleep(2*time.Second)
+		fmt.Println("---------- 2s ")
+		timeout <- true
+		finish = true
+	}()
+
+	go func() {
+		for!finish{
+			select {
+			case <-ch:
+				fmt.Println("receive")
+			case <-timeout:
+				fmt.Println("timeout")
+			default:
+				// 非阻塞类型的
+			}
+		}
+	}()
+	go func() {
+		time.Sleep(4 * time.Second)
+		fmt.Println("---------- 4s ")
+		ch <- 1
+	}()
+	time.Sleep(5 * time.Second)
+}
+
+// select_sync 阻塞等待超时
+func select_sync() {
+	ch := make(chan int)
+	go func() {
+		time.Sleep(2 * time.Second)
+		ch <- 1
+	}()
+	select {
+	case <- ch :
+		fmt.Print("receive01")
+	case <- time.After(1 * time.Second):
+		fmt.Println("timeout")
+	}
+
+	c2 := make(chan int)
+	go func() {
+		time.Sleep(2 * time.Second)
+		c2 <- 1
+	}()
+
+	select {
+	case <- c2 :
+		fmt.Println("receive02")
+	case <- time.After(3 * time.Second):
+		fmt.Println("timeout02")
+
+	}
+
+}

@@ -7,8 +7,9 @@ import (
 )
 
 func Test_g(test *testing.T) {
-	g()
-	test.Log("common test success")
+	// g()
+	// test.Log("common test success")
+	colse_demo()
 }
 
 func TestChannelSelect(test *testing.T) {
@@ -77,4 +78,44 @@ func TestO2(test *testing.T) {
 		fmt.Println("channel is full !")
 	}
 	fmt.Println("finish")
+}
+
+func Test_colse_demo(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		// TODO: Add test cases.
+		{name: "test01"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			colse_demo()
+		})
+	}
+}
+
+func Test_select_cycle(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{name: "cycle01"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			select_cycle()
+		})
+	}
+}
+
+func Test_select_sync(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{name:"select同步操作"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			select_sync()
+		})
+	}
 }
