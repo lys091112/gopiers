@@ -175,3 +175,57 @@ type StringSlice2 []string
 func (p StringSlice2) Len() int           { return len(p) }
 func (p StringSlice2) Less(i, j int) bool { return len(p[i]) > len(p[j]) }
 func (p StringSlice2) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+
+// N: 791
+// 利用规则 26个字符不会超出界限，时间复杂度 O(n+m), 空间复杂度：O(C) c=26
+func CustomerSortString(order, s string) string {
+	if len(order) == 0 {
+		return s
+	}
+
+	var cnt [26]int
+	// 统计s的词频
+	for i := 0; i < len(s); i++ {
+		cnt[s[i]-'a'] += 1
+	}
+
+	res := make([]uint8, len(s))
+	// 遍历 order，然后将字符串的字符按照order内字符出现的顺序新增
+	index := 0
+	for i := 0; i < len(order); i++ {
+		for cnt[order[i]-'a'] > 0 {
+			res[index] = order[i]
+			index += 1
+			cnt[order[i]-'a'] -= 1
+		}
+	}
+
+	// 未出现的词遍历
+	for i, v := range cnt {
+		for v > 0 {
+			res[index] = uint8((i + 'a'))
+			index += 1
+			v -= 1
+		}
+	}
+
+	return string(res)
+}
+
+// N: 754
+func reachNumber(target int) int {
+	if target < 0 {
+		target = -target
+	} else if target == 0 {
+		return 0
+	}
+
+	n := int(math.Sqrt(float64(target)))
+	for {
+		dist := n * (n + 1) / 2
+		if dist >= target && (dist-target)%2 == 0 {
+			return n
+		}
+		n++
+	}
+}

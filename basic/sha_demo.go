@@ -10,5 +10,6 @@ func Sha256(str string) [32]byte {
 }
 
 func TestSha() {
+	sha256.New()
 	fmt.Printf("%x", Sha256("my name is crescent"))
 }

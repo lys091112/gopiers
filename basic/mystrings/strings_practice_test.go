@@ -1,22 +1,67 @@
 package mystrings
 
 import (
-	"fmt"
 	"testing"
-	"time"
 )
 
-func TestStringAppender(test *testing.T) {
-	k := 4
-	d := [4]time.Duration{}
-	for i := 0; i < k; i++ {
-		d[i] = StringAppender(i, 10000)
+func BenchmarkSumString(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		AddString()
 	}
+	b.StopTimer()
+}
 
-	for i := 0; i < k-1; i++ {
-		fmt.Printf("way %d is %6.1f times of way %d\n", i, float32(d[i])/float32(d[k-1]), k-1)
+func BenchmarkSprintfString(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		SprintfString()
 	}
+	b.StopTimer()
+}
 
-	test.Log("sucdess")
+func BenchmarkBuilderString(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		BuilderString()
+	}
+	b.StopTimer()
+}
 
+func BenchmarkBytesBuffString(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		BufferString()
+	}
+	b.StopTimer()
+}
+
+func BenchmarkJoinstring(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		JoinString()
+	}
+	b.StopTimer()
+}
+
+func BenchmarkByteSliceString(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ByteSliceString()
+	}
+	b.StopTimer()
+}
+
+func TestMakeTest(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		// TODO: Add test cases.
+		{name: "t01"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			MakeTest()
+		})
+	}
 }

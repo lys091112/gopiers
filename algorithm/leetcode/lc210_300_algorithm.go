@@ -135,7 +135,7 @@ func visitOrder(n int, res *[]int, vGroup map[int][]int, visit map[int]int) bool
 }
 
 /* --------------- 212 --------------------------- */
-// 212 trie + 深度遍历
+// N:212 trie + 深度遍历
 func findWords(board [][]byte, words []string) []string {
 
 	if len(board) <= 0 {
@@ -273,7 +273,7 @@ func min221(a, b, c int) int {
 	return min
 }
 
-// 242
+// N:242
 func isAnagram(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
@@ -292,4 +292,36 @@ func isAnagram(s string, t string) bool {
 		}
 	}
 	return true
+}
+
+// N: 274 寻找h数
+// 实现思路是：h的含义是至少发布h个文档，且这个h个文档每个文档的引用次数不少于h，其他的非h个文档内的引用数少于h
+// 所以本题可以理解为至少发布了h次，且每篇最少被引用h的最大h值。 当某个数量的文档数不满足时，比他大的文档数更不满足
+// k篇出现的次数不足k次 ==》 意味着 k+1篇出现的 次数一定不足 k+1次
+// https://zhuanlan.zhihu.com/p/355503124
+func HIndex(citations []int) int {
+	if len(citations) == 0 {
+		return 0
+	}
+	l, r := 0, len(citations)
+	for l < r {
+		mid := (l + r + 1) >> 1 // 这里的mid代指的是文档数，即看一半以上的文档数是否满足h
+		if checkCs(citations, mid) {
+			l = mid // 因为下次查询的结果可能包含mid，所以需要将mid包含进下一次的迭代里
+		} else {
+			r = mid - 1
+		}
+	}
+	return r
+}
+
+// 检查是否有h个文档的引用数大于h
+func checkCs(cs []int, h int) bool {
+	cnt := 0
+	for _, v := range cs {
+		if v >= h {
+			cnt += 1
+		}
+	}
+	return cnt >= h
 }

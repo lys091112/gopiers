@@ -24,6 +24,13 @@ func Max(a, b int) int {
 	return b
 }
 
+func If(flag bool, a interface{}, b interface{}) interface{} {
+	if flag {
+		return a
+	}
+	return b
+}
+
 // Divisor Stein 带实现
 func Divisor(a, b int) int {
 	if a < b {

@@ -66,6 +66,7 @@ func make_use() {
 	fmt.Printf("%%p --> %p\n", &n)
 	changeArray(n)
 	fmt.Println(n)
+	fmt.Println(n[0 : len(n)-1])
 
 	n1 := 5
 	changeN1(n1)
@@ -78,6 +79,7 @@ func changeArray(n []int) {
 	fmt.Printf("%%p --> %p\n", &n)
 }
 
+// 值传递,不会改变原始值
 func changeN1(n1 int) {
 	n1 = 7
 }
@@ -143,6 +145,14 @@ func slice_demo() {
 	fmt.Println("Before append to self:", slice)
 	slice = append(slice, slice...)
 	fmt.Println("After append to self:", slice)
+
+	fmt.Println("======= 切片的截取和扩容 sli04 demo ==========")
+	sli04 := make([]int, 0, 5)
+	fmt.Printf("len: %d, cap: %d\n", len(sli04), cap(sli04))
+	sli04 = sli04[0:0]
+	fmt.Printf("len: %d, cap: %d\n", len(sli04), cap(sli04))
+	sli04 = sli04[:2]
+	fmt.Printf("len: %d, cap: %d\n", len(sli04), cap(sli04))
 
 }
 

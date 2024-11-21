@@ -1,19 +1,18 @@
 package util
 
 // 创建空二维数组
-func InitArray(row int, col int, initValue... int) [][]int {
+func InitArray(row int, col int, initValue ...int) [][]int {
 	dp := make([][]int, row)
 	for i := 0; i < row; i++ {
 		dp[i] = make([]int, col)
 		if len(initValue) == 1 {
-			for j := 0;j < col; j ++ {
+			for j := 0; j < col; j++ {
 				dp[i][j] = initValue[0]
 			}
 		}
 	}
 	return dp
 }
-
 
 // 翻转数组切片
 func Reverse(nums []int) []int {
@@ -22,4 +21,10 @@ func Reverse(nums []int) []int {
 	}
 
 	return nums
+}
+
+func ArrayFills(nums []int, defaultValue int) {
+	for i := 0; i < len(nums); i++ {
+		nums[i] = defaultValue
+	}
 }

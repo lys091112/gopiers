@@ -47,7 +47,7 @@ func tupleSameProduct(nums []int) int {
 }
 
 // 全局遍历，超时
-func tupleSameProductV2(nums []int) int {
+func TupleSameProductV2(nums []int) int {
 	if len(nums) < 4 {
 		return 0
 	}
@@ -89,7 +89,9 @@ func uniqueKey(i, j, k, z int) string {
 }
 
 // N 5655. 重新排列后的最大子矩阵
-//  类似于85，对数据预处理，算以这个点为结尾，上面有多少个连续的1，就是这一列以这个点为结尾的最大高度
+//
+//	类似于85，对数据预处理，算以这个点为结尾，上面有多少个连续的1，就是这一列以这个点为结尾的最大高度
+//
 // 这样就将二维问题转成一维, 即求圆柱可以组成的最大矩形面积
 func largestSubmatrix(matrix [][]int) int {
 

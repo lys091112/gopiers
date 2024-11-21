@@ -4,7 +4,7 @@ package leetcode
  * N: 336 回文对
  * 分情况考虑各种可能性
  */
-func palindromePairs(words []string) [][]int {
+func PalindromePairs(words []string) [][]int {
 	if len(words) < 2 {
 		return nil
 	}
@@ -16,7 +16,7 @@ func palindromePairs(words []string) [][]int {
 
 	result := make([][]int, 0)
 	for i, v := range words {
-		if "" == v {
+		if v == "" {
 			continue
 		}
 		// 查询是否包含空串 并且自身是回文串

@@ -117,12 +117,10 @@ func hasCycle(head *ListNode) bool {
 		return false
 	}
 
-	slow, fast := head, head
+	slow, fast := head, head.Next
 
 	for {
-		if slow == nil {
-			return false
-		} else if nil == fast || nil == fast.Next {
+		if nil == fast || nil == fast.Next {
 			return false
 		} else {
 			slow = slow.Next
@@ -138,51 +136,51 @@ func hasCycle(head *ListNode) bool {
  * N: 144
  * 方法的使用
  */
- func preorderTraversal(root *TreeNode) (vals []int) {
-	 if root == nil {
-		 return []int{}
-	 }
-	 // 通过函数闭包的使用
-	 var preorder func(*TreeNode)
-	 preorder = func(node *TreeNode) {
+func preorderTraversal(root *TreeNode) (vals []int) {
+	if root == nil {
+		return []int{}
+	}
+	// 通过函数闭包的使用
+	var preorder func(*TreeNode)
+	preorder = func(node *TreeNode) {
 		if node == nil {
 			return
-		} 
+		}
 		vals = append(vals, node.Val)
 		preorder(node.Left)
 		preorder(node.Right)
-	 }
+	}
 
-	 preorder(root)
-	 return 
+	preorder(root)
+	return
 
 	//  result := make([]int,0)
 	//  result = traversal(root, result)
-	// return result 
+	// return result
 }
 
 // 迭代方式
- func preorderTraversalV2(root *TreeNode) (vals []int) {
-	 if root == nil {
-		 return []int{}
-	 }
+func preorderTraversalV2(root *TreeNode) (vals []int) {
+	if root == nil {
+		return []int{}
+	}
 
-	 stack := []*TreeNode{}
-	 node := root
-	 for node != nil || len(stack) > 0 {
-		 // 遍历所有的左节点并依次入栈
+	stack := []*TreeNode{}
+	node := root
+	for node != nil || len(stack) > 0 {
+		// 遍历所有的左节点并依次入栈
 		for node != nil {
 			stack = append(stack, node)
 			vals = append(vals, node.Val)
 			node = node.Left
 		}
 		// 获取右节点
-		node = stack[len(stack) - 1].Right
+		node = stack[len(stack)-1].Right
 		stack = stack[:len(stack)-1] // 最后一个节点出栈
-	 }
+	}
 
-	 return
- }
+	return
+}
 
 func traversal(node *TreeNode, result []int) []int {
 	if node == nil {
@@ -190,12 +188,12 @@ func traversal(node *TreeNode, result []int) []int {
 	}
 	result = append(result, node.Val)
 	result = traversal(node.Left, result)
-	result = traversal(node.Right,result)
+	result = traversal(node.Right, result)
 	return result
 }
 
 /**
- * N: 169 
+ * N: 169
  */
 func majorityElementImprove(nums []int) int {
 
@@ -206,16 +204,16 @@ func majorityElementImprove(nums []int) int {
 		if count == 0 {
 			k = v
 			count++
-		}else {
+		} else {
 			if k == v {
 				count++
-			}else {
+			} else {
 				count--
 			}
 		}
 	}
 
-	return k 
+	return k
 }
 
 /**

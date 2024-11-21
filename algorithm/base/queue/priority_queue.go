@@ -1,8 +1,13 @@
 package queue
 
+import "sort"
+
 /**
  * 通过使用heap下的函数组成优先队列
  */
+
+// 用于判断PriorityQueue 是否实现 sort接口
+var _ sort.Interface = &PriorityQueue{}
 
 type PriorityQueue []int
 

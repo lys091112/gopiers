@@ -8,6 +8,31 @@ import (
 	"github.com/lys091112/gopiers/algorithm/base"
 )
 
+type StockSpanner struct {
+	st []Pair
+}
+
+func Constrcutor901() StockSpanner {
+	return StockSpanner{}
+}
+
+// N:901 返回股票跨度 时间：O(N) 空间：O(N)
+func (ss *StockSpanner) Next(price int) int {
+	// 检查栈顶元素，若小于price，出栈，并将value值加price的value值，直到没有比price小的
+	// 否则 入栈，value值为1
+	cnt := 1
+	for len(ss.st) > 0 {
+		t := ss.st[len(ss.st)-1].Key.(int)
+		if t <= price {
+			cnt += t
+			ss.st = ss.st[00 : t-1]
+		}
+	}
+	ss.st = append(ss.st, Pair{Key: price, Value: cnt})
+
+	return cnt
+}
+
 // N:925
 // 每次都一个叠词，然后看匹配的数量是否大于该叠词长度
 func isLongPressedName(name string, typed string) bool {
@@ -22,15 +47,15 @@ func isLongPressedName(name string, typed string) bool {
 	targetCount := 0
 
 	// 比对匹配数量 主要是要确定初始的赋值
-	for i := 0;i <= len(name); i++ {
+	for i := 0; i <= len(name); i++ {
 		if prev == 0 {
 			prev = name[i]
-			count ++
-		}else if i < len(name) && name[i] == prev {
-			count ++
-		}else {
+			count++
+		} else if i < len(name) && name[i] == prev {
+			count++
+		} else {
 			for {
-				if targetIdx == len(typed) || typed[targetIdx] != prev  {
+				if targetIdx == len(typed) || typed[targetIdx] != prev {
 					break
 				}
 				targetIdx++
@@ -42,7 +67,7 @@ func isLongPressedName(name string, typed string) bool {
 				return false
 			}
 
-			if(i < len(name)) {
+			if i < len(name) {
 				prev = name[i]
 				targetCount = 0
 				count = 1
@@ -50,8 +75,7 @@ func isLongPressedName(name string, typed string) bool {
 		}
 	}
 
-
-	return targetIdx == len(typed) 
+	return targetIdx == len(typed)
 }
 
 // 双指针移动
@@ -60,14 +84,14 @@ func isLongPressedName02(name string, typed string) bool {
 		return true
 	}
 
-	i , j := 0,0
+	i, j := 0, 0
 	for j < len(typed) {
 		if i < len(name) && name[i] == typed[j] {
 			i++
 			j++
-		}else if j > 0 && typed[j-1] == typed[j] {				
+		} else if j > 0 && typed[j-1] == typed[j] {
 			j++
-		}else {
+		} else {
 			return false
 		}
 	}
@@ -132,9 +156,9 @@ func (rc *RecentCounter) Ping(t int) int {
 
 // N:946
 // 判断三种情况
-// 	1. 栈顶等于当前值，remove(stack.top) -> next one
-//	2. 栈顶的索引大于当前值的索引，即该值已经被放入到栈内，无法被取出，直接返回
-//	3. 遍历pushed栈，继续放入还未放入的元素
+//  1. 栈顶等于当前值，remove(stack.top) -> next one
+//  2. 栈顶的索引大于当前值的索引，即该值已经被放入到栈内，无法被取出，直接返回
+//  3. 遍历pushed栈，继续放入还未放入的元素
 func validateStackSequences(pushed []int, popped []int) bool {
 	if len(pushed) <= 0 && len(popped) <= 0 {
 		return true

@@ -1,6 +1,8 @@
 package fileread
 
 import (
+	"fmt"
+	"path/filepath"
 	"testing"
 )
 
@@ -19,7 +21,7 @@ func TestReadUseBufio(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ReadUseBufio(tt.args.path,func(string){
+			ReadUseBufio(tt.args.path, func(string) {
 
 			})
 		})
@@ -47,7 +49,7 @@ func Test_readMmap(t *testing.T) {
 		name string
 	}{
 		{
-			name:"test01",
+			name: "test01",
 		},
 	}
 	for _, tt := range tests {
@@ -55,4 +57,9 @@ func Test_readMmap(t *testing.T) {
 			readMmap()
 		})
 	}
+}
+
+func TestXxx(t *testing.T) {
+	fmt.Println(filepath.Clean("/home/langle/xianyue/own/../tmp"))
+	fmt.Println(filepath.Match("*b[^c-d]", "abc"))
 }

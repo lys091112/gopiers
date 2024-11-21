@@ -49,7 +49,7 @@ func Test_getNumberOfBacklogOrders(t *testing.T) {
 		// },
 		{
 			name: "test03",
-			args: args{[][]int{{27,30,0},{10,10,1},{28,17,1},{19,28,0},{16,8,1},{14,22,0},{12,18,1},{3,15,0},{25,6,1}}},
+			args: args{[][]int{{27, 30, 0}, {10, 10, 1}, {28, 17, 1}, {19, 28, 0}, {16, 8, 1}, {14, 22, 0}, {12, 18, 1}, {3, 15, 0}, {25, 6, 1}}},
 			want: 82,
 		},
 	}
@@ -60,10 +60,5 @@ func Test_getNumberOfBacklogOrders(t *testing.T) {
 			}
 		})
 	}
-
-}
-
-// N:5696. 统计异或值在范围内的数对有多少
-func countPairs(nums []int, low int, high int) int {
 
 }

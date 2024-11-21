@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/moon"
+	"github.com/lys091112/gopiers/common"
 )
 
 func main() {
-	fmt.Println("hello world")
 	path, err := os.Getwd()
 	if nil != err {
 		panic(err)
 	}
 	fmt.Println(path)
-	moon.Start()
+	// loura.Start()
+
+	common.BaiduSearch()
 }

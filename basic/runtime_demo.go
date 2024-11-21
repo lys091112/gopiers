@@ -3,6 +3,7 @@ package basic
 import (
 	"fmt"
 	"runtime"
+	"time"
 )
 
 func first() {
@@ -71,6 +72,34 @@ func runtime_memstate() {
 	fmt.Printf(format, "bytes in non-idle span", m.HeapInuse)
 	fmt.Printf(format, "bytes released to the OS", m.HeapReleased)
 	fmt.Printf(format, "total number of allocated objects", m.HeapObjects)
+}
+
+func GCTest01() {
+	// i 就是后面说的 数据对象
+	var i = 3
+	// 这里的func 就是后面一直说的 finalizer
+	// 在对象被gc之前，做一些资源释放的工作，类似，函数返回之前执行defer操作一样，我们可以使用  runtime.SetFinalizer，它会在gc周期到来的时候，
+	// 检查下对象有没有引用，如果没有引用，起一个协程，执行绑定的资源释放函数。执行完毕后解除绑定，当下一个gc周期到来的时候回收当前对象
+	// TIP: 第一次GC不会回收改对象，在第二次回收时才会回收该对象
+	runtime.SetFinalizer(&i, func(i *int) {
+		fmt.Println(i, *i, "set finalizer")
+	})
+	runtime.GC()
+	time.Sleep(time.Second * 1)
+	fmt.Println("after sleep")
+	runtime.GC() //0xc000018168 3 set finalizer
+	subFunc()
+	time.Sleep(time.Second * 1)
+	runtime.GC() //0xc000018180 3 set sub finalizer
+}
+func subFunc() {
+	// i 就是后面说的 数据对象
+	var i = 3
+	// 这里的func 就是后面一直说的 finalizer
+	runtime.SetFinalizer(&i, func(i *int) {
+		fmt.Println(i, *i, "set sub finalizer")
+	})
+	runtime.GC()
 }
 
 // debug
