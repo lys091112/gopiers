@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/lys091112/gopiers/common"
+	"github.com/lys091112/gopiers/common/websocket"
 )
 
 func main() {
@@ -14,6 +14,5 @@ func main() {
 	}
 	fmt.Println(path)
 	// loura.Start()
-
-	common.BaiduSearch()
+	websocket.Get()
 }

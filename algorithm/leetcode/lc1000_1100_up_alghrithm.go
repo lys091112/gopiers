@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/lys091112/gopiers/algorithm/base/queue"
-	"github.com/lys091112/gopiers/algorithm/leetcode/util"
+	"github.com/lys091112/gopiers/algorithm/util"
 )
 
 /**

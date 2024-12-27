@@ -1,6 +1,6 @@
 package base
 
-import "github.com/lys091112/gopiers/algorithm/leetcode/util"
+import "github.com/lys091112/gopiers/algorithm/util"
 
 // MonostoneStack 获取下一个比他小的元素的数组下标
 func MonostoneStack(q []int) []int {

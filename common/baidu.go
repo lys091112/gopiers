@@ -21,10 +21,10 @@ func calculateSN(queryStr string, sk string) string {
 
 func BaiduSearch() {
 	// 此处填写您在控制台-应用管理-创建应用后获取的AK
-	ak := "t7HgxEz7LrwS9qQO2j8Gx1yQWRqHecwe"
+	ak := ""
 
 	// 此处填写您在控制台-应用管理-创建应用时，校验方式选择sn校验后生成的SK
-	sk := "YY1yOEaHWheZ9OyVcL3cx8Ad0hbrJ2sW"
+	sk := ""
 
 	// 服务地址
 	host := "https://api.map.baidu.com"

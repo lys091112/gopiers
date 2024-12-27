@@ -1,13 +1,15 @@
 package queue
 
-import "sort"
+import (
+	"container/heap"
+)
 
 /**
  * 通过使用heap下的函数组成优先队列
  */
 
 // 用于判断PriorityQueue 是否实现 sort接口
-var _ sort.Interface = &PriorityQueue{}
+var _ heap.Interface = &PriorityQueue{}
 
 type PriorityQueue []int
 
@@ -39,7 +41,7 @@ func (q *PriorityQueue) Pop() interface{} {
 }
 
 func (q *PriorityQueue) Front() interface{} {
-	if 0 == q.Len() {
+	if q.Len() == 0 {
 		return nil
 	}
 

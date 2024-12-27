@@ -4,7 +4,7 @@ import (
 	"container/heap"
 	"container/list"
 
-	"github.com/lys091112/gopiers/algorithm/leetcode/util"
+	"github.com/lys091112/gopiers/algorithm/util"
 )
 
 /**
@@ -168,7 +168,7 @@ func checkValidString(s string) bool {
 	return true
 }
 
-// 找到第一个需要被替换的节点 
+// 找到第一个需要被替换的节点
 // 查找的原则是，先找为(的节点，如果找不到，那么找为*的节点，如果仍未找到，那么返回空
 func find678Z(stack *list.List) *list.Element {
 	if nil == stack {

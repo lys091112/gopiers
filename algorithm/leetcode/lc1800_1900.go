@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"strconv"
 
-	"github.com/lys091112/gopiers/algorithm/leetcode/util"
+	"github.com/lys091112/gopiers/algorithm/util"
 )
 
 // N: 1879

@@ -6,7 +6,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/lys091112/gopiers/algorithm/leetcode/util"
+	"github.com/lys091112/gopiers/algorithm/util"
 )
 
 /**
